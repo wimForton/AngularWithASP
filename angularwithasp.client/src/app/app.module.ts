@@ -4,10 +4,12 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CanvasBoxComponent } from './components/canvas-box/canvas-box.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CanvasBoxComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

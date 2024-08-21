@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { CanvasBoxComponent } from './components/canvas-box/canvas-box.component';
 
 interface WeatherForecast {
   date: string;
