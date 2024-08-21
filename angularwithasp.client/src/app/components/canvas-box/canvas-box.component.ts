@@ -19,13 +19,13 @@ export class CanvasBoxComponent implements OnInit {
 
     const scene = new THREE.Scene();
 
-    const material = new THREE.MeshMatcapMaterial({ color: new THREE.Color("rgb(20, 20, 200)") });/// = new THREE.MeshToonMaterial();
+    const material = new THREE.MeshStandardMaterial({ color: new THREE.Color("rgba(20, 200, 200, 10)"), wireframe: false, side: THREE.BackSide });/// = new THREE.MeshToonMaterial();
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
     scene.add(ambientLight);
     
 
-    const pointLight = new THREE.PointLight(0xffffff, 5);
+    const pointLight = new THREE.PointLight(0xffffff, 15);
     pointLight.position.x = 6;
     pointLight.position.y = 2;
     pointLight.position.z = 6;
@@ -45,7 +45,7 @@ export class CanvasBoxComponent implements OnInit {
     scene.add(torus, box);
 
     const edges = new THREE.EdgesGeometry(geometry);
-    const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: new THREE.Color("rgb(255, 200, 0)") }));
+    const line = new THREE.LineSegments(edges, new THREE.MeshStandardMaterial({ color: new THREE.Color("rgb(20, 200, 200)"), emissive: new THREE.Color("rgb(20, 200, 200)") }));//new THREE.LineBasicMaterial({ color: new THREE.Color("rgb(255, 200, 0)") })
     torus.add(line);
 
     const canvasSizes = {
