@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CanvasBoxComponent } from './components/canvas-box/canvas-box.component';
+import { ApplicationThreeDComponent } from './components/applicationThreeD/application-ThreeD.component';
 
 interface WeatherForecast {
   date: string;

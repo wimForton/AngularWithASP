@@ -7,12 +7,27 @@ body {
 
 .container {
   position: absolute;
-  top: 0;
-  z-index: -1;
+  top: 30%;
   width: 100%;
   height: 100%;
 }
-
+.containerTop {
+  position: relative;
+  width: 90%;
+  height: 20%;
+  border-style: solid;
+}
+.containerA {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.containerB {
+  position: absolute;
+  left: 70%;
+  width: 100%;
+  height: 100%;
+}
 * {
   box-sizing: border-box;
 }

@@ -5,17 +5,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CanvasBoxComponent } from './components/canvas-box/canvas-box.component';
+import { ApplicationThreeDComponent } from './components/applicationThreeD/application-ThreeD.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CanvasBoxComponent
+    CanvasBoxComponent,
+    ApplicationThreeDComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

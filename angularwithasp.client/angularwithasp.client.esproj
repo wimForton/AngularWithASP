@@ -7,4 +7,7 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\angularwithasp.client\browser\</BuildOutputFolder>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="src\app\components\applicationThreeD\3Dtools\ProportiesViewport\" />
+  </ItemGroup>
 </Project>
