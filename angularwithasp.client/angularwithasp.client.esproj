@@ -11,4 +11,7 @@
     <None Remove="src\app\components\applicationThreeD\**" />
     <TypeScriptConfiguration Remove="src\app\components\applicationThreeD\**" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\app\components\application3D\3Dtools\Viewport\" />
+  </ItemGroup>
 </Project>

@@ -52,7 +52,7 @@ export class Application3DComponent implements OnInit {
   }
 
   createThreeJsBox(): void {
-    let containerTop;
+    let containerTop: Element;
     let containerA;
     let containerB;
     let rendererA: THREE.WebGLRenderer;
@@ -66,7 +66,7 @@ export class Application3DComponent implements OnInit {
     const pointer = new THREE.Vector2(), raycaster = new THREE.Raycaster();
     let INTERSECTED: any;
 
-    containerTop = document.querySelector('.containerTop');
+    containerTop = document.querySelector('.containerTop')!;
     containerA = document.getElementById("contA");
     containerB = document.getElementById("contB");
 
@@ -108,18 +108,13 @@ export class Application3DComponent implements OnInit {
     // renderer 
     rendererA = new THREE.WebGLRenderer({ antialias: true });
     rendererA.setSize(containerAProps.width, containerAProps.height);
-    //rendererA.domElement.style.position = 'absolute';
-    //rendererA.domElement.style.left = String(containerA!.clientWidth * 0.5) + "px";
     rendererA.setPixelRatio(window.devicePixelRatio)
     rendererA.setClearColor(new THREE.Color("rgb(230,230,230)"), 1);
     containerA!.appendChild(rendererA.domElement);
     new OrbitControls(viewport3D.camera, rendererA.domElement);
 
     rendererB = new THREE.WebGLRenderer({ antialias: true });
-    rendererB.setSize(containerB!.clientWidth * 0.3, containerB!.clientHeight * 0.5);
-    rendererB.domElement.style.position = 'absolute';
-    //rendererB.domElement.style.left = String(containerB!.clientWidth * 0.5) + "px";
-    //rendererB.setViewport(0, 0, containerB!.clientWidth * 0.5, containerB!.clientHeight * 0.5);
+    rendererB.setSize(containerBProps.width, containerBProps.height);
     rendererB.setPixelRatio(window.devicePixelRatio);
     rendererB.setClearColor(new THREE.Color("rgb(30,30,230)"), 1);
     containerB!.appendChild(rendererB.domElement);
@@ -130,15 +125,22 @@ export class Application3DComponent implements OnInit {
 
     //controls.addEventListener('change', () => { rendererB.render(viewportNodal.scene, viewportNodal.camera) });
     window.addEventListener('resize', () => {
-      containerA = document.getElementById("contA");
+      //containerA = document.getElementById("contA");
       containerAProps.x = containerA?.offsetLeft!;
       containerAProps.y = containerA?.offsetTop!;
       containerAProps.width = containerA?.offsetWidth!;
       containerAProps.height = containerA?.offsetHeight!;
       viewport3D.camera.aspect = containerAProps.width / containerAProps.height;
       viewport3D.camera.updateProjectionMatrix();
+      rendererA.setSize(containerAProps.width, containerAProps.height);
+      rendererA.setPixelRatio(window.devicePixelRatio)
+      rendererA.render(viewport3D.scene, viewport3D.camera);
 
-      const aspect = window.innerWidth * 0.6 / window.innerHeight;
+      containerBProps.x = containerB?.offsetLeft!;
+      containerBProps.y = containerB?.offsetTop!;
+      containerBProps.width = containerB?.offsetWidth!;
+      containerBProps.height = containerB?.offsetHeight!;
+      const aspect = containerBProps.width / containerBProps.height;
       const frustumSize = 20;
       
       viewportNodal.camera.left = - frustumSize * aspect / 2;
@@ -146,14 +148,7 @@ export class Application3DComponent implements OnInit {
       viewportNodal.camera.top = frustumSize / 2;
       viewportNodal.camera.bottom = - frustumSize / 2;
       viewportNodal.camera.updateProjectionMatrix();
-
-      rendererA.setSize(containerAProps.width, containerAProps.height);
-      rendererA.setPixelRatio(window.devicePixelRatio)
-      //rendererA.domElement.style.left = String(containerA!.clientWidth * 0.5) + "px";
-      rendererA.render(viewport3D.scene, viewport3D.camera);
-
-      rendererB.setSize(containerB!.clientWidth * 0.3, containerB!.clientHeight * 0.5);
-      //rendererB.domElement.style.left = String(containerB!.clientWidth * 0.5) + "px";
+      rendererB.setSize(containerBProps.width, containerBProps.height);
       rendererB.setPixelRatio(window.devicePixelRatio);
       rendererB.render(viewportNodal.scene, viewportNodal.camera);
     });
