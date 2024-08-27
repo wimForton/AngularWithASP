@@ -21,7 +21,7 @@ export class Viewport3D{
       0.001,
       1000
     );
-    this.camera.position.z = 30;
+    this.camera.position.z = 15;
     const material = new THREE.MeshStandardMaterial({ color: new THREE.Color("rgb(20, 200, 200)"), wireframe: true, side: THREE.BackSide });
     const geometry = new THREE.TorusGeometry(5, 1.5, 30, 20);
     this.torus = new THREE.Mesh(

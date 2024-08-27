@@ -3,18 +3,18 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { Viewport3D } from "./3Dtools/Viewport3D/Viewport3D";
 import { ViewportNodal } from "./3Dtools/ViewportNodal/ViewportNodal"
-import { DragControls } from 'three/addons/controls/DragControls.js';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
+import { WindowProperties } from './3Dtools/Utils/WindowProperties';
 
 @Component({
-    selector: 'app-application-ThreeD',
-    templateUrl: './application-ThreeD.component.html',
-  styleUrl: './application-ThreeD.component.css',
+    selector: 'app-application-3D',
+    templateUrl: './application-3D.component.html',
+  styleUrl: './application-3D.component.css',
   imports: [
     MatSliderModule,
     MatFormFieldModule,
@@ -25,67 +25,69 @@ import { MatCardModule } from '@angular/material/card';
   ],
     standalone: true,
 })
-export class ApplicationThreeDComponent implements OnInit {
+export class Application3DComponent implements OnInit {
 
-  formatLabel(value: number): string {
-    if (value >= 1000) {
-      return String(value);// Math.round(value / 1000) + 'k';
-    }
+  containerAProps = {
+    x: 1,
+    y: 1,
+    width: 1,
+    height: 1,
+  };
 
-    return `${value}`;
-  }
-  disabled = false;
+  //disabled = false;
   max = 100;
-  min = 0;
-  showTicks = false;
-  step = 1;
-  thumbLabel = false;
+  min = -100;
+  //showTicks = false;
+  step = 0.01;
+  thumbLabel = true;
   value: number = 0;
 
   onInputChange(event: Event) {
-    console.log("This is emitted as the thumb slides");
-    console.log((event.target as HTMLInputElement).value);
-    this.value = +((event.target as HTMLInputElement).value);
+    this.value = +((event.target as HTMLInputElement).value);// + = string to number
   }
+
   ngOnInit(): void {
     this.createThreeJsBox();
     
   }
 
   createThreeJsBox(): void {
-    var containerTop;
-    var containerA;
-    var containerB;
-    var rendererA: THREE.WebGLRenderer;
-    var rendererB: THREE.WebGLRenderer;
+    let containerTop;
+    let containerA;
+    let containerB;
+    let rendererA: THREE.WebGLRenderer;
+    let rendererB: THREE.WebGLRenderer;
 
 
 
-    var aspectB;
+    let aspectB;
 
     //let group: any;
     const pointer = new THREE.Vector2(), raycaster = new THREE.Raycaster();
     let INTERSECTED: any;
 
     containerTop = document.querySelector('.containerTop');
-    //containerA = document.querySelector('.containerA');
     containerA = document.getElementById("contA");
-    //containerB = document.querySelector('.containerB');
     containerB = document.getElementById("contB");
 
     console.log("containerA width" + containerA?.offsetWidth);
+    console.log("containerA top" + containerA?.offsetTop);
     console.log("containerB left" + containerB?.offsetLeft);
 
 
-    const canvas = document.getElementById('application-ThreeD');
-    const viewport3DSize = {
-      width: window.innerWidth * 0.7,
-      height: window.innerHeight * 0.7,
-    };
-    const viewportNodesSize = {
-      width: window.innerWidth * 0.3,
-      height: window.innerHeight * 0.3,
-    };
+
+
+    let containerAProps: WindowProperties = new WindowProperties();
+    containerAProps.x = containerA?.offsetLeft!;
+    containerAProps.y = containerA?.offsetTop!;
+    containerAProps.width = containerA?.offsetWidth!;
+    containerAProps.height = containerA?.offsetHeight!;
+
+    let containerBProps: WindowProperties = new WindowProperties();
+    containerBProps.x = containerB?.offsetLeft!;
+    containerBProps.y = containerB?.offsetTop!;
+    containerBProps.width = containerB?.offsetWidth!;
+    containerBProps.height = containerB?.offsetHeight!;
 
     var widthB = containerB!.clientWidth;
     var heightB = containerB!.clientHeight;
@@ -100,12 +102,12 @@ export class ApplicationThreeDComponent implements OnInit {
     }
 
     aspectB = widthB / heightB;
-
-    const viewport3D = new Viewport3D(viewport3DSize.width * 1.4, viewport3DSize.height, window);
-    const viewportNodal = new ViewportNodal(viewport3DSize.width * 0.6, viewport3DSize.height, window);
+    //const viewport3D = new Viewport3D(viewport3DSize.width * 1.4, viewport3DSize.height, window);
+    const viewport3D = new Viewport3D(containerAProps.width, containerAProps.height, window);
+    const viewportNodal = new ViewportNodal(containerBProps.width, containerBProps.height, window);
     // renderer 
     rendererA = new THREE.WebGLRenderer({ antialias: true });
-    rendererA.setSize(containerA!.clientWidth * 0.7, containerA!.clientHeight * 0.5);
+    rendererA.setSize(containerAProps.width, containerAProps.height);
     //rendererA.domElement.style.position = 'absolute';
     //rendererA.domElement.style.left = String(containerA!.clientWidth * 0.5) + "px";
     rendererA.setPixelRatio(window.devicePixelRatio)
@@ -128,8 +130,12 @@ export class ApplicationThreeDComponent implements OnInit {
 
     //controls.addEventListener('change', () => { rendererB.render(viewportNodal.scene, viewportNodal.camera) });
     window.addEventListener('resize', () => {
-
-      viewport3D.camera.aspect = window.innerWidth * 1.4 / window.innerHeight;
+      containerA = document.getElementById("contA");
+      containerAProps.x = containerA?.offsetLeft!;
+      containerAProps.y = containerA?.offsetTop!;
+      containerAProps.width = containerA?.offsetWidth!;
+      containerAProps.height = containerA?.offsetHeight!;
+      viewport3D.camera.aspect = containerAProps.width / containerAProps.height;
       viewport3D.camera.updateProjectionMatrix();
 
       const aspect = window.innerWidth * 0.6 / window.innerHeight;
@@ -141,7 +147,7 @@ export class ApplicationThreeDComponent implements OnInit {
       viewportNodal.camera.bottom = - frustumSize / 2;
       viewportNodal.camera.updateProjectionMatrix();
 
-      rendererA.setSize(containerA!.clientWidth * 0.7, containerA!.clientHeight * 0.5);
+      rendererA.setSize(containerAProps.width, containerAProps.height);
       rendererA.setPixelRatio(window.devicePixelRatio)
       //rendererA.domElement.style.left = String(containerA!.clientWidth * 0.5) + "px";
       rendererA.render(viewport3D.scene, viewport3D.camera);

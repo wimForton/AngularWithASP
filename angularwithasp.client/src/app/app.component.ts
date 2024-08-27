@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { CanvasBoxComponent } from './components/canvas-box/canvas-box.component';
-import { ApplicationThreeDComponent } from './components/applicationThreeD/application-ThreeD.component';
+import { Application3DComponent } from './components/application3D/application-3D.component';
 import { FormsModule } from '@angular/forms';
 
 interface WeatherForecast {
@@ -16,7 +15,7 @@ interface WeatherForecast {
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
     standalone: true,
-  imports: [ApplicationThreeDComponent, FormsModule]
+  imports: [Application3DComponent, FormsModule]
 })
 export class AppComponent implements OnInit {
   public forecasts: WeatherForecast[] = [];

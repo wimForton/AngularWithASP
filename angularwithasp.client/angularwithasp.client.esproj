@@ -8,6 +8,7 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\angularwithasp.client\browser\</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\app\components\applicationThreeD\3Dtools\ProportiesViewport\" />
+    <None Remove="src\app\components\applicationThreeD\**" />
+    <TypeScriptConfiguration Remove="src\app\components\applicationThreeD\**" />
   </ItemGroup>
 </Project>
