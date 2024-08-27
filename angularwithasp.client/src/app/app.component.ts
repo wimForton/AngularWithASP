@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CanvasBoxComponent } from './components/canvas-box/canvas-box.component';
 import { ApplicationThreeDComponent } from './components/applicationThreeD/application-ThreeD.component';
+import { FormsModule } from '@angular/forms';
 
 interface WeatherForecast {
   date: string;
@@ -11,9 +12,11 @@ interface WeatherForecast {
 }
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css',
+    standalone: true,
+  imports: [ApplicationThreeDComponent, FormsModule]
 })
 export class AppComponent implements OnInit {
   public forecasts: WeatherForecast[] = [];

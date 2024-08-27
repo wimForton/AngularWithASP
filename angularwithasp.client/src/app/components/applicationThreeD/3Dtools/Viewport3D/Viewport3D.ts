@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
+
 export class Viewport3D{
   canvasSizes = {
     width: 1,
@@ -9,6 +10,7 @@ export class Viewport3D{
   public scene = new THREE.Scene();
   public camera: THREE.PerspectiveCamera;
   private window: Window;
+  public torus: THREE.Mesh
   constructor(canvasWidth: number, canvasHeight: number, window: Window) {
     this.window = window;
     this.canvasSizes.width = canvasWidth;
@@ -20,6 +22,12 @@ export class Viewport3D{
       1000
     );
     this.camera.position.z = 30;
+    const material = new THREE.MeshStandardMaterial({ color: new THREE.Color("rgb(20, 200, 200)"), wireframe: true, side: THREE.BackSide });
+    const geometry = new THREE.TorusGeometry(5, 1.5, 30, 20);
+    this.torus = new THREE.Mesh(
+      geometry,
+      material
+    );
 
     this.scene.add(this.camera);
     this.AddSomeThreejsStuff();
@@ -34,13 +42,8 @@ export class Viewport3D{
     pointLight.position.y = 2;
     pointLight.position.z = 6;
     this.scene.add(pointLight);
-    const material = new THREE.MeshStandardMaterial({ color: new THREE.Color("rgb(20, 200, 200)"), wireframe: true, side: THREE.BackSide });
-    const geometry = new THREE.TorusGeometry(5, 1.5, 30, 20);
-    const torus = new THREE.Mesh(
-      geometry,
-      material
-    );
-    this.scene.add(torus);
+
+    this.scene.add(this.torus);
   }
 
 }

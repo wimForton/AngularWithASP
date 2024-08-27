@@ -4,16 +4,49 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { Viewport3D } from "./3Dtools/Viewport3D/Viewport3D";
 import { ViewportNodal } from "./3Dtools/ViewportNodal/ViewportNodal"
 import { DragControls } from 'three/addons/controls/DragControls.js';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
-  selector: 'app-application-ThreeD',
-  templateUrl: './application-ThreeD.component.html',
+    selector: 'app-application-ThreeD',
+    templateUrl: './application-ThreeD.component.html',
   styleUrl: './application-ThreeD.component.css',
-
+  imports: [
+    MatSliderModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatCardModule,
+    MatInputModule,
+    MatCheckboxModule
+  ],
+    standalone: true,
 })
 export class ApplicationThreeDComponent implements OnInit {
-  
+
+  formatLabel(value: number): string {
+    if (value >= 1000) {
+      return String(value);// Math.round(value / 1000) + 'k';
+    }
+
+    return `${value}`;
+  }
+  disabled = false;
+  max = 100;
+  min = 0;
+  showTicks = false;
+  step = 1;
+  thumbLabel = false;
+  value: number = 0;
+
+  onInputChange(event: Event) {
+    console.log("This is emitted as the thumb slides");
+    console.log((event.target as HTMLInputElement).value);
+    this.value = +((event.target as HTMLInputElement).value);
+  }
   ngOnInit(): void {
     this.createThreeJsBox();
     
@@ -25,6 +58,8 @@ export class ApplicationThreeDComponent implements OnInit {
     var containerB;
     var rendererA: THREE.WebGLRenderer;
     var rendererB: THREE.WebGLRenderer;
+
+
 
     var aspectB;
 
@@ -125,13 +160,13 @@ export class ApplicationThreeDComponent implements OnInit {
       console.log("pointer Y" + (event.clientY / window.innerHeight));
     }
 
-    rendererB.setAnimationLoop(() => { render(); });
+    rendererB.setAnimationLoop(() => { render(this.value / 10); });
 
-    function render() {
+    function render(value: number) {
 
       rendererA.render(viewport3D.scene, viewport3D.camera);
       rendererB.render(viewportNodal.scene, viewportNodal.camera);
-
+      viewport3D.torus.setRotationFromEuler(new THREE.Euler(0, value,0))
       raycaster.setFromCamera(pointer, viewportNodal.camera);
 
       const intersects = raycaster.intersectObjects(viewportNodal.scene.children, false);

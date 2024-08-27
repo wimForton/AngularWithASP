@@ -5,9 +5,10 @@ import Stats from 'three/addons/libs/stats.module.js';
 import { GUI } from 'dat.gui';
 
 @Component({
-  selector: 'app-canvas-box',
-  templateUrl: './canvas-box.component.html',
-  styleUrl: './canvas-box.component.css'
+    selector: 'app-canvas-box',
+    templateUrl: './canvas-box.component.html',
+    styleUrl: './canvas-box.component.css',
+    standalone: true
 })
 export class CanvasBoxComponent implements OnInit {
   ngOnInit(): void {
