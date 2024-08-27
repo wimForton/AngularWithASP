@@ -12,10 +12,10 @@ export class Viewport {
     width: 1,
     height: 1,
   };
-  constructor(scene: THREE.Scene, renderer: THREE.WebGLRenderer, camera: THREE.PerspectiveCamera, containerid: string ) {
-    this.renderer = renderer;
+  constructor(scene: THREE.Scene, containerid: string ) {
+    //this.renderer = renderer;
     this.scene = scene;
-    this.camera = camera;
+    //this.camera = camera;
     this.container = document.getElementById(containerid)!;
     this.containerProps.x = this.container.offsetLeft;
     this.containerProps.y = this.container.offsetTop;
