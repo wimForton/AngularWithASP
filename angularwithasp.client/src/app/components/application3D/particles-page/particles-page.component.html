@@ -8,23 +8,30 @@
 
 </div>
 
-<div class="right" id="containerB">
-
-    <div *ngFor="let slider of sliders">
-      <mat-form-field class="example-margin example-width" style="width: 100px; padding: 0px" (input)="slider.onInputChange($event)">
-        <mat-label>{{slider.label}}</mat-label>
-        <input matInput type="number" [(ngModel)]="slider.value">
-      </mat-form-field>
-      <mat-slider class="example-margin"
-                  [disabled]="slider.disabled"
-                  [max]="slider.max"
-                  [min]="slider.min"
-                  [step]="slider.step"
-                  [discrete]="slider.thumbLabel">
-        <input matSliderThumb [(ngModel)]="slider.value" #slider (input)="slider.onInputChange($event)">
-      </mat-slider>
+  <div class="right" id="containerB">
+    <div *ngFor="let item of emitters">
+      <p>{{item.name}}</p>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{item.name}}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div *ngFor="let slider of item.sliders">
+          <mat-form-field class="example-margin example-width" style="width: 100px; padding: 0px" (input)="slider.onInputChange($event)">
+            <mat-label>{{slider.label}}</mat-label>
+            <input matInput type="number" [(ngModel)]="slider.value">
+          </mat-form-field>
+          <mat-slider class="example-margin"
+                      [disabled]="slider.disabled"
+                      [max]="slider.max"
+                      [min]="slider.min"
+                      [step]="slider.step"
+                      [discrete]="slider.thumbLabel">
+            <input matSliderThumb [(ngModel)]="slider.value" #slider (input)="slider.onInputChange($event)">
+          </mat-slider>
+        </div>
+      </mat-expansion-panel>
     </div>
- </div>
+  </div>
 
 </section>
 

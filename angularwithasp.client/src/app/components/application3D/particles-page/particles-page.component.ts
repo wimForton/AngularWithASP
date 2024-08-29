@@ -13,6 +13,7 @@ import { Slider } from './../UiComponentData/Slider';
 import { ParticleScene } from '../3Dtools/ParticleSystem/ParticleScene';
 import { EmitClass, Emitter, ParticleSystem } from '../3Dtools/ParticleSystem/ParticleSystem';
 import { EmitFromPoint } from '../3Dtools/ParticleSystem/emitters/EmitFromPoint';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 
@@ -27,6 +28,7 @@ import { EmitFromPoint } from '../3Dtools/ParticleSystem/emitters/EmitFromPoint'
     MatCardModule,
     MatInputModule,
     MatCheckboxModule,
+    MatExpansionModule,
     CommonModule
   ],
   templateUrl: './particles-page.component.html',
@@ -47,20 +49,23 @@ export class ParticlesPageComponent {
 
 
   ngOnInit(): void {
-    this.particleSystem = new ParticleSystem(20);
+    this.particleSystem = new ParticleSystem(50);
     this.particleSystem.addEmitClass(new EmitFromPoint());
 
 
     for (var em = 0; em < this.particleSystem.GetEmitClasses().length; em++) {
       const emitter = new Emitter()
+
       for (let s = 0; s < this.particleSystem.GetEmitClasses()[em].sliders.length; s++) {
         this.sliders.push(this.particleSystem.GetEmitClasses()[em].sliders[s]);
       }
       //emitter.sliders = this.particleSystem.GetEmitClasses()[em].sliders;
       //emitter.name = this.particleSystem.GetEmitClasses()[em].name;
-      emitter.name = "naam";
+      emitter.name = this.particleSystem.GetEmitClasses()[em].name;
+      emitter.sliders = this.particleSystem.GetEmitClasses()[em].sliders;
       this.emitters.push(emitter);
     }
+
     this.testscene = new ParticleScene(this.particleSystem);
     this.viewPort = new Viewport(this.testscene, "container");
 
