@@ -13,6 +13,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\app\components\application3D\3Dtools\ParticleScene\" />
+    <Folder Include="src\app\components\application3D\3Dtools\ParticleSystem\forces\" />
     <Folder Include="src\app\components\application3D\3Dtools\TestScene\" />
     <Folder Include="src\app\components\application3D\3Dtools\Viewport\" />
     <Folder Include="src\app\components\application3D\UiComponentData\" />

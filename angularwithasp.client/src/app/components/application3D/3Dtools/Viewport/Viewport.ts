@@ -1,20 +1,23 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { ParticleScene } from '../ParticleSystem/ParticleScene';
 
 export class Viewport {
   private renderer: THREE.WebGLRenderer;
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
   private container: HTMLElement;
+  private particleScene: ParticleScene;
   private containerProps = {
     x: 1,
     y: 1,
     width: 1,
     height: 1,
   };
-  constructor(scene: THREE.Scene, containerid: string ) {
+  constructor(particleScene: ParticleScene, containerid: string) {
+    this.particleScene = particleScene;
     //this.renderer = renderer;
-    this.scene = scene;
+    this.scene = this.particleScene.scene;
     //this.camera = camera;
     this.container = document.getElementById(containerid)!;
     this.containerProps.x = this.container.offsetLeft;
@@ -52,6 +55,7 @@ export class Viewport {
   }
 
   public render() {
+    this.particleScene.Update();
     this.renderer.render(this.scene, this.camera);
   }
 }

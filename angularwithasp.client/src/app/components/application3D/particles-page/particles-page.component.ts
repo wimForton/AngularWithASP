@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import * as THREE from 'three';
+
 import { MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
@@ -10,6 +10,10 @@ import { MatCardModule } from '@angular/material/card';
 import { Viewport } from '../3Dtools/Viewport/Viewport';
 import { TestScene } from '../3Dtools/TestScene/TestScene';
 import { Slider } from './../UiComponentData/Slider';
+import { ParticleScene } from '../3Dtools/ParticleSystem/ParticleScene';
+import { EmitClass, Emitter, ParticleSystem } from '../3Dtools/ParticleSystem/ParticleSystem';
+import { EmitFromPoint } from '../3Dtools/ParticleSystem/emitters/EmitFromPoint';
+
 
 
 
@@ -28,30 +32,38 @@ import { Slider } from './../UiComponentData/Slider';
   templateUrl: './particles-page.component.html',
   styleUrl: './particles-page.component.css'
 })
+
+
 export class ParticlesPageComponent {
+
   public value = 0;
   private viewPort?: Viewport;
   //private viewPortB?: Viewport;
-  private testscene: TestScene = new TestScene();
+  private testscene?: ParticleScene;
   public sliders: Array<Slider> = new Array<Slider>();
-  public stringarray: Array<String> = ["a", "b", "c", "d"];
-  public users = [{ id: 1, username: 'john' }, { id: 2, username: 'jane' }];
+  public emitters: Array<Emitter> = [];
+
+  private particleSystem?: ParticleSystem;
 
 
   ngOnInit(): void {
+    this.particleSystem = new ParticleSystem(20);
+    this.particleSystem.addEmitClass(new EmitFromPoint());
 
-    this.viewPort = new Viewport(this.testscene.GetScene(), "container");
-    //this.viewPortB = new Viewport(this.testscene.GetScene(), "containerB");
-    this.sliders.push(new Slider);
-    this.sliders.push(new Slider);
-    this.sliders.push(new Slider);
-    this.sliders.push(new Slider);
-    this.sliders.push(new Slider);
-    this.sliders.push(new Slider);
-    this.sliders[1].showTicks = true;
-    this.sliders[1].max = 20;
-    this.sliders[1].label = "wim";
-    //this.sliders[0].max
+
+    for (var em = 0; em < this.particleSystem.GetEmitClasses().length; em++) {
+      const emitter = new Emitter()
+      for (let s = 0; s < this.particleSystem.GetEmitClasses()[em].sliders.length; s++) {
+        this.sliders.push(this.particleSystem.GetEmitClasses()[em].sliders[s]);
+      }
+      //emitter.sliders = this.particleSystem.GetEmitClasses()[em].sliders;
+      //emitter.name = this.particleSystem.GetEmitClasses()[em].name;
+      emitter.name = "naam";
+      this.emitters.push(emitter);
+    }
+    this.testscene = new ParticleScene(this.particleSystem);
+    this.viewPort = new Viewport(this.testscene, "container");
+
   }
 
   onInputChange(event: Event) {

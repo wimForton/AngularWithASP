@@ -20,7 +20,7 @@ header {
 .left {
   float: left;
   width: 70%;
-  height: 400px; /* only for demonstration, should be removed */
+  height: 800px; /* only for demonstration, should be removed */
   background: #ccc;
 }
 
@@ -28,7 +28,7 @@ header {
   float: left;
   width: 30%;
   background-color: #f1f1f1;
-  height: 400px; /* only for demonstration, should be removed */
+  height: 800px; /* only for demonstration, should be removed */
 }
 
 
