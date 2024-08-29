@@ -4,6 +4,8 @@ import { Application3DComponent } from './components/application3D/application-3
 import { ParticlesPageComponent } from './components/application3D/particles-page/particles-page.component';
 import { FormsModule } from '@angular/forms';
 
+
+
 interface WeatherForecast {
   date: string;
   temperatureC: number;

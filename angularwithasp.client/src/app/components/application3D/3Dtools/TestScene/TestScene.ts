@@ -2,6 +2,8 @@ import * as THREE from 'three';
 
 export class TestScene {
   private scene: THREE.Scene = new THREE.Scene();
+  private torus?: THREE.Mesh;
+  private sliderValues: Array<number> = [];
   constructor() {
     this.CreateScene();
   }
@@ -9,7 +11,7 @@ export class TestScene {
 
     const material = new THREE.MeshStandardMaterial({ color: new THREE.Color("rgb(20, 200, 200)"), wireframe: false });
     const geometry = new THREE.TorusGeometry(5, 1.5, 90, 50);
-    const torus = new THREE.Mesh(
+    this.torus = new THREE.Mesh(
       geometry,
       material
     );
@@ -20,10 +22,13 @@ export class TestScene {
     pointLight.position.y = 2;
     pointLight.position.z = 6;
     this.scene.add(pointLight);
-
-    this.scene.add(torus);
+    this.sliderValues[0] = this.torus.rotation.y;
+    this.scene.add(this.torus);
   }
   public GetScene(): THREE.Scene {
     return this.scene;
+  }
+  public UpdateScene() {
+    this.torus!.rotation.y = this.sliderValues[0];
   }
 }

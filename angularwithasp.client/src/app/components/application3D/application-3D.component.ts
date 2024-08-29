@@ -11,6 +11,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { WindowProperties } from './3Dtools/Utils/WindowProperties';
 
+
+
 @Component({
     selector: 'app-application-3D',
     templateUrl: './application-3D.component.html',
@@ -42,13 +44,14 @@ export class Application3DComponent implements OnInit {
   thumbLabel = true;
   value: number = 0;
 
+
   onInputChange(event: Event) {
     this.value = +((event.target as HTMLInputElement).value);// + = string to number
   }
 
   ngOnInit(): void {
     this.createThreeJsBox();
-    
+
   }
 
   createThreeJsBox(): void {

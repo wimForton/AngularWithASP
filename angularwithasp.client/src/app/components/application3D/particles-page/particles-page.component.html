@@ -9,11 +9,21 @@
 </div>
 
 <div class="right" id="containerB">
-  <ul>
-    <li><a href="#">London</a></li>
-    <li><a href="#">Paris</a></li>
-    <li><a href="#">Tokyo</a></li>
-  </ul>
+  <div *ngFor="let slider of sliders">
+    <mat-form-field class="example-margin example-width" style="width: 100px; padding: 0px" (input)="slider.onInputChange($event)">
+      <mat-label>{{slider.label}}</mat-label>
+      <input matInput type="number" [(ngModel)]="slider.value">
+    </mat-form-field>
+    <mat-slider class="example-margin"
+                [disabled]="slider.disabled"
+                [max]="slider.max"
+                [min]="slider.min"
+                [step]="slider.step"
+                [discrete]="slider.thumbLabel">
+      <input matSliderThumb [(ngModel)]="slider.value" #slider (input)="slider.onInputChange($event)">
+    </mat-slider>
+  </div>
+
 </div>
 </section>
 
