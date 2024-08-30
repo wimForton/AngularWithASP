@@ -14,12 +14,16 @@ export class ParticleScene {
 
   private CreateSceneLights() {
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
-    this.scene.add(ambientLight);
+    //this.scene.add(ambientLight);
     const pointLight = new THREE.PointLight(0xffffff, 15);
     pointLight.position.x = 6;
     pointLight.position.y = 2;
     pointLight.position.z = 6;
-    this.scene.add(pointLight);
+    //this.scene.add(pointLight);
+    const distantLight = new THREE.DirectionalLight(new THREE.Color("rgb(250, 250, 180)"), 4);
+
+    distantLight.rotation.x = Math.PI * 0.5;
+    this.scene.add(distantLight);
   }
 
   private CreateThreeObjects() {

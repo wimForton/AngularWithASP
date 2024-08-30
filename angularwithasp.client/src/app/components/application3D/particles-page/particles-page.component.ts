@@ -14,6 +14,8 @@ import { ParticleScene } from '../3Dtools/ParticleSystem/ParticleScene';
 import { EmitClass, Emitter, ParticleSystem } from '../3Dtools/ParticleSystem/ParticleSystem';
 import { EmitFromPoint } from '../3Dtools/ParticleSystem/emitters/EmitFromPoint';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { Vector } from '../3Dtools/Utils/trigFunctions';
+import { VectorForce } from '../3Dtools/ParticleSystem/forces/VectorForce';
 
 
 
@@ -42,7 +44,7 @@ export class ParticlesPageComponent {
   private viewPort?: Viewport;
   //private viewPortB?: Viewport;
   private testscene?: ParticleScene;
-  public sliders: Array<Slider> = new Array<Slider>();
+  //public sliders: Array<Slider> = new Array<Slider>();
   public emitters: Array<Emitter> = [];
 
   private particleSystem?: ParticleSystem;
@@ -51,16 +53,15 @@ export class ParticlesPageComponent {
   ngOnInit(): void {
     this.particleSystem = new ParticleSystem(50);
     this.particleSystem.addEmitClass(new EmitFromPoint());
+    this.particleSystem.addForceClass(new VectorForce());
 
 
     for (var em = 0; em < this.particleSystem.GetEmitClasses().length; em++) {
       const emitter = new Emitter()
 
-      for (let s = 0; s < this.particleSystem.GetEmitClasses()[em].sliders.length; s++) {
-        this.sliders.push(this.particleSystem.GetEmitClasses()[em].sliders[s]);
-      }
-      //emitter.sliders = this.particleSystem.GetEmitClasses()[em].sliders;
-      //emitter.name = this.particleSystem.GetEmitClasses()[em].name;
+      //for (let s = 0; s < this.particleSystem.GetEmitClasses()[em].sliders.length; s++) {
+      //  this.sliders.push(this.particleSystem.GetEmitClasses()[em].sliders[s]);
+      //}
       emitter.name = this.particleSystem.GetEmitClasses()[em].name;
       emitter.sliders = this.particleSystem.GetEmitClasses()[em].sliders;
       this.emitters.push(emitter);
@@ -71,8 +72,8 @@ export class ParticlesPageComponent {
 
   }
 
-  onInputChange(event: Event) {
-    this.value = +((event.target as HTMLInputElement).value);// + = string to number
-    console.log(this.sliders[1].value);
-  }
+  //onInputChange(event: Event) {
+  //  this.value = +((event.target as HTMLInputElement).value);// + = string to number
+  //  console.log(this.sliders[1].value);
+  //}
 }

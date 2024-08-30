@@ -11,7 +11,7 @@ export class Emitter {
 export interface ForceClass {
   name: String;
   sliders: Slider[];
-  calculate(p: Particle, particleIndex: number, delta: number): void;
+  calculate(p: Particle, particleIndex: number): void;
 }
 export interface EmitClass {
   name: String;
@@ -32,6 +32,8 @@ export class ParticleSystem {
   private initParticles() {
     for (var p = 0; p < this.maxParticles; p++) {
       let particle = new Particle();
+      particle.position.z = 1000;
+      particle.age = particle.maxAge + 1;
       this.Particles.push(particle);
     }
   }

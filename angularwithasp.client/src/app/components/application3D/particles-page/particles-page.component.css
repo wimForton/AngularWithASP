@@ -14,7 +14,9 @@ header {
   font-size: 35px;
   color: white;
 }
-
+  header h2 {
+    font-size: 50px;
+  }
 
 
 .left {
