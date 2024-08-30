@@ -10,6 +10,5 @@ export class Slider {
 
   public onInputChange(event: Event) {
     this.value = +((event.target as HTMLInputElement).value);// + = string to number
-    console.log(this.label + this.value);
   }
 }

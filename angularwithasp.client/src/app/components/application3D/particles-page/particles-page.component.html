@@ -1,40 +1,83 @@
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 
+</head>
 <header>
   <h2>Particles</h2>
 </header>
+<div class="midsection">
+  <section>
 
-<section>
-<div class="left" id="container">
+    <div class="left" id="container">
 
+    </div>
+
+    <div class="right" id="containerB">
+      <div class="controllers-title">
+        <p>Emitter</p>
+      </div>
+      <mat-accordion mutli="false">
+        <div *ngFor="let item of emittersParameters">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>{{item.name}}</mat-panel-title>
+            </mat-expansion-panel-header>
+            <div *ngFor="let slider of item.sliders">
+              <mat-form-field appearance="outline" style="width: 100px; padding: 0px" (input)="slider.onInputChange($event)">
+                <mat-label>{{slider.label}}</mat-label>
+                <input matInput type="number" [(ngModel)]="slider.value">
+              </mat-form-field>
+              <mat-slider class="example-margin mat-body-small"
+                          [disabled]="slider.disabled"
+                          [max]="slider.max"
+                          [min]="slider.min"
+                          [step]="slider.step"
+                          [discrete]="slider.thumbLabel">
+                <input matSliderThumb [(ngModel)]="slider.value" #slider (input)="slider.onInputChange($event)">
+              </mat-slider>
+            </div>
+          </mat-expansion-panel>
+        </div>
+        <div class="controllers-title">
+          <p>
+            Operators
+            <button mat-button [matMenuTriggerFor]="menu">Add Operator</button>
+            <mat-menu #menu="matMenu">
+              <div *ngFor="let forcetoadd of addForces">
+                <button mat-menu-item (click)="forcetoadd.run()">{{forcetoadd.name}}</button>
+              </div>
+            </mat-menu>
+          </p>
+        </div>
+
+        <div *ngFor="let item of forcesParameters">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>{{item.name}}  </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div *ngFor="let slider of item.sliders">
+              <mat-form-field class="example-margin example-width" style="width: 100px; padding: 0px" (input)="slider.onInputChange($event)">
+                <mat-label>{{slider.label}}</mat-label>
+                <input matInput type="number" [(ngModel)]="slider.value">
+              </mat-form-field>
+              <mat-slider class="example-margin"
+                          [disabled]="slider.disabled"
+                          [max]="slider.max"
+                          [min]="slider.min"
+                          [step]="slider.step"
+                          [discrete]="slider.thumbLabel">
+                <input matSliderThumb [(ngModel)]="slider.value" #slider (input)="slider.onInputChange($event)">
+              </mat-slider>
+            </div>
+            <button (click)="RemoveForce(item)">remove</button>
+          </mat-expansion-panel>
+        </div>
+      </mat-accordion>
+    </div>
+
+  </section>
 </div>
 
-  <div class="right" id="containerB">
-
-    <div *ngFor="let item of emitters">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>{{item.name}}</mat-panel-title>
-        </mat-expansion-panel-header>
-        <div *ngFor="let slider of item.sliders">
-          <mat-form-field class="example-margin example-width" style="width: 100px; padding: 0px" (input)="slider.onInputChange($event)">
-            <mat-label>{{slider.label}}</mat-label>
-            <input matInput type="number" [(ngModel)]="slider.value">
-          </mat-form-field>
-          <mat-slider class="example-margin"
-                      [disabled]="slider.disabled"
-                      [max]="slider.max"
-                      [min]="slider.min"
-                      [step]="slider.step"
-                      [discrete]="slider.thumbLabel">
-            <input matSliderThumb [(ngModel)]="slider.value" #slider (input)="slider.onInputChange($event)">
-          </mat-slider>
-        </div>
-      </mat-expansion-panel>
-    </div>
-  </div>
-
-</section>
-
 <footer>
-
 </footer>

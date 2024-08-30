@@ -4,35 +4,64 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  top: 0px;
 }
 
 /* Style the header */
 header {
-  background-color: #666;
+  background-color: rgb(70, 68, 57);
+  color: rgb(164, 189, 229);
   padding: 30px;
   text-align: center;
   font-size: 35px;
+
+}
+
+
+
+mat-expansion-panel {
+  margin-bottom: 1px;
+  background-color: rgb(199, 193, 172);
+}
+mat-panel-title {
+  background-color: rgb(91, 88, 77);
+  padding: 8px;
+  border-radius: 6px;
   color: white;
 }
-  header h2 {
-    font-size: 50px;
-  }
-
-
+button {
+    margin-left: 10px;
+  background-color: white;
+}
+.controllers-title {
+  font-size: 20px;
+  padding: 5px;
+} 
+header h2 {
+  font-size: 50px;
+}
+ 
+.midsection {
+  background-color: rgb(234, 229, 211);
+}
 .left {
   float: left;
   width: 70%;
   height: 800px; /* only for demonstration, should be removed */
   background: #ccc;
+  border-radius: 6px;
 }
 
 .right {
+  padding: 8px;
   float: left;
   width: 30%;
-  background-color: #f1f1f1;
-  height: 800px; /* only for demonstration, should be removed */
+  background-color: rgb(108, 104, 90);
+  /* height: 1000px;  only for demonstration, should be removed */
 }
-
+.right p{
+    color: white;
+}
 
 
 

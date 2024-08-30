@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatSliderModule } from '@angular/material/slider';
@@ -11,11 +11,16 @@ import { Viewport } from '../3Dtools/Viewport/Viewport';
 import { TestScene } from '../3Dtools/TestScene/TestScene';
 import { Slider } from './../UiComponentData/Slider';
 import { ParticleScene } from '../3Dtools/ParticleSystem/ParticleScene';
-import { EmitClass, Emitter, ParticleSystem } from '../3Dtools/ParticleSystem/ParticleSystem';
+import { EmitClass, ControlParameters, ParticleSystem, ForceClass, FunctionWithTrigger } from '../3Dtools/ParticleSystem/ParticleSystem';
 import { EmitFromPoint } from '../3Dtools/ParticleSystem/emitters/EmitFromPoint';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 import { Vector } from '../3Dtools/Utils/trigFunctions';
 import { VectorForce } from '../3Dtools/ParticleSystem/forces/VectorForce';
+import { DragForce } from '../3Dtools/ParticleSystem/forces/DragForce';
+import { TurbulenceForce } from '../3Dtools/ParticleSystem/forces/TurbulenceForce';
+import { BounceForce } from '../3Dtools/ParticleSystem/forces/bounceForce';
 
 
 
@@ -31,6 +36,8 @@ import { VectorForce } from '../3Dtools/ParticleSystem/forces/VectorForce';
     MatInputModule,
     MatCheckboxModule,
     MatExpansionModule,
+    MatMenuModule,
+    MatButtonModule,
     CommonModule
   ],
   templateUrl: './particles-page.component.html',
@@ -45,35 +52,98 @@ export class ParticlesPageComponent {
   //private viewPortB?: Viewport;
   private testscene?: ParticleScene;
   //public sliders: Array<Slider> = new Array<Slider>();
-  public emitters: Array<Emitter> = [];
+  public emittersParameters: Array<ControlParameters> = [];
+  public forcesParameters: Array<ControlParameters> = [];
+  public addForces: Array<FunctionWithTrigger> = [];
 
   private particleSystem?: ParticleSystem;
 
+  //constructor(
+  //  private changeDetection: ChangeDetectorRef
+  //) { }
 
   ngOnInit(): void {
-    this.particleSystem = new ParticleSystem(50);
+    this.particleSystem = new ParticleSystem(200);
     this.particleSystem.addEmitClass(new EmitFromPoint());
-    this.particleSystem.addForceClass(new VectorForce());
 
 
-    for (var em = 0; em < this.particleSystem.GetEmitClasses().length; em++) {
-      const emitter = new Emitter()
+    function addVectorForce(this: any) {
+      let force = new VectorForce();
+      const controlParameters = new ControlParameters()
+      this.particleSystem.addForceClass(force);
+      controlParameters.name = force.name;
+      controlParameters.sliders = force.sliders;
+      controlParameters.id = this.forcesParameters.length;
+      console.log("this.controlParameters.id" + controlParameters.id);
+      this.forcesParameters.push(controlParameters);
+    }
+    function addDragForce(this: any) {
+      let force = new DragForce();
+      const controlParameters = new ControlParameters()
+      this.particleSystem.addForceClass(force);
+      controlParameters.name = force.name;
+      controlParameters.sliders = force.sliders;
+      controlParameters.id = this.forcesParameters.length;
+      console.log("this.controlParameters.id" + controlParameters.id);
+      this.forcesParameters.push(controlParameters);
+    }
 
-      //for (let s = 0; s < this.particleSystem.GetEmitClasses()[em].sliders.length; s++) {
-      //  this.sliders.push(this.particleSystem.GetEmitClasses()[em].sliders[s]);
-      //}
-      emitter.name = this.particleSystem.GetEmitClasses()[em].name;
-      emitter.sliders = this.particleSystem.GetEmitClasses()[em].sliders;
-      this.emitters.push(emitter);
+    function addTurbForce(this: any) {
+      let force = new TurbulenceForce();
+      const controlParameters = new ControlParameters()
+      this.particleSystem.addForceClass(force);
+      controlParameters.name = force.name;
+      controlParameters.sliders = force.sliders;
+      controlParameters.id = this.forcesParameters.length;
+      console.log("this.controlParameters.id" + controlParameters.id);
+      this.forcesParameters.push(controlParameters);
+    }
+    function addBounceForce(this: any) {
+      let force = new BounceForce();
+      const controlParameters = new ControlParameters()
+      this.particleSystem.addForceClass(force);
+      controlParameters.name = force.name;
+      controlParameters.sliders = force.sliders;
+      controlParameters.id = this.forcesParameters.length;
+      console.log("this.controlParameters.id" + controlParameters.id);
+      this.forcesParameters.push(controlParameters);
+    }
+
+
+
+    this.addForces.push(new FunctionWithTrigger(addVectorForce.bind(this), "Vector Force"));
+    this.addForces.push(new FunctionWithTrigger(addDragForce.bind(this), "Drag Force"));
+    this.addForces.push(new FunctionWithTrigger(addTurbForce.bind(this), "Turbulence Force"));
+    this.addForces.push(new FunctionWithTrigger(addBounceForce.bind(this), "Bounce Force"));
+
+    for (var i = 0; i < this.particleSystem.GetEmitClasses().length; i++) {
+      const controlParameters = new ControlParameters();
+      controlParameters.name = this.particleSystem.GetEmitClasses()[i].name;
+      controlParameters.sliders = this.particleSystem.GetEmitClasses()[i].sliders;
+      controlParameters.id = i;
+      this.emittersParameters.push(controlParameters);
+    }
+
+    for (var i = 0; i < this.particleSystem.GetForceClasses().length; i++) {
+      const controlParameters = new ControlParameters()
+      let force: ForceClass = this.particleSystem.GetForceClasses()[i]
+
+      controlParameters.name = force.name;
+      controlParameters.sliders = force.sliders;
+      controlParameters.id = i;
+      this.forcesParameters.push(controlParameters);
     }
 
     this.testscene = new ParticleScene(this.particleSystem);
     this.viewPort = new Viewport(this.testscene, "container");
 
   }
-
-  //onInputChange(event: Event) {
-  //  this.value = +((event.target as HTMLInputElement).value);// + = string to number
-  //  console.log(this.sliders[1].value);
-  //}
+  public RemoveForce(item: ControlParameters) {
+    if (confirm("Are you sure to delete " + item.name)) {
+      let index = this.forcesParameters.indexOf(item);
+      this.forcesParameters.splice(index, 1);
+      this.particleSystem?.GetForceClasses().splice(index, 1)
+      console.log(index);
+    }
+  }
 }

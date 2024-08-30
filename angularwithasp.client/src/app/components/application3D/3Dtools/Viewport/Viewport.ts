@@ -35,7 +35,7 @@ export class Viewport {
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setSize(this.containerProps.width, this.containerProps.height);
     this.renderer.setPixelRatio(window.devicePixelRatio)
-    this.renderer.setClearColor(new THREE.Color("rgb(230,230,230)"), 1);
+    this.renderer.setClearColor(new THREE.Color("rgb(30,30,30)"), 1);
     this.renderer.setAnimationLoop(() => { this.render(); });
 
     this.container.appendChild(this.renderer.domElement);

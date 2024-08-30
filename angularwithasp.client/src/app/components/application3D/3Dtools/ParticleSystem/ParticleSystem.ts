@@ -3,9 +3,10 @@ import { Particle } from "./Particle";
 import { ParticleSystemData } from "./ParticleSystemData";
 
 
-export class Emitter {
+export class ControlParameters {
   sliders: Array<Slider> = [];
   name: String = "";
+  id: number = 0;
 }
 
 export interface ForceClass {
@@ -17,6 +18,18 @@ export interface EmitClass {
   name: String;
   sliders: Slider[];
   emit(p: Particle, particleIndex: number): void;
+}
+
+export class FunctionWithTrigger {
+  private fn: Function;
+  public name = "";
+  constructor(fn: Function, name: string) {
+    this.fn = fn;
+    this.name = name;
+  }
+  public run() {
+    this.fn();
+  }
 }
 
 export class ParticleSystem {
@@ -49,6 +62,10 @@ export class ParticleSystem {
     return this.emitClasses;
   }
 
+  public GetForceClasses(): ForceClass[] {
+    return this.forceClasses;
+  }
+
   public SimulateFrame() {
     for (var p = 0; p < this.Particles.length; p++) {
       let particle = this.Particles[p];
@@ -59,9 +76,9 @@ export class ParticleSystem {
         
       }
 
-      //for (var p = 0; p < this.forceClasses.length; p++) {
-
-      //}
+      for (var f = 0; f < this.forceClasses.length; f++) {
+        this.forceClasses[f].calculate(particle, p);
+      }
       let newX = particle.position.x + particle.velocity.x;//particle.position.x + particle.velocity.x;
       let newY = particle.position.y + particle.velocity.y;
       let newZ = particle.position.z + particle.velocity.z;

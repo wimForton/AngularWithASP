@@ -22,4 +22,14 @@ export class Vector3D {
     this.y += v.y;
     this.z += v.z;
   }
+  public multVec(v: Vector3D) {
+    this.x *= v.x;
+    this.y *= v.y;
+    this.z *= v.z;
+  }
+  public multNumber(v: number) {
+    this.x *= v;
+    this.y *= v;
+    this.z *= v;
+  }
 }

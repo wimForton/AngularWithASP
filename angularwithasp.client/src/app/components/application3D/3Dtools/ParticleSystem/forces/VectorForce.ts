@@ -28,7 +28,7 @@ export class VectorForce implements ForceClass {
     this.slider1.min = -1;
     this.slider1.max = 1;
     this.slider1.step = precision;
-    this.slider1.value = 0;
+    this.slider1.value = -0.1;
     this.sliders.push(this.slider1);
 
     this.slider2.label = "Force Z";
@@ -42,12 +42,13 @@ export class VectorForce implements ForceClass {
     this.slider3.min = 0;
     this.slider3.max = 1;
     this.slider3.step = precision;
-    this.slider3.value = 1;
+    this.slider3.value = 0.1;
     this.sliders.push(this.slider3);
+    console.log("vectorforce added");
   }
 
   calculate(p: Particle, i: number): void {
-    let forceVector: Vector3D = new Vector3D(this.slider0.value, this.slider1.value, this.slider2.value);
+    let forceVector: Vector3D = new Vector3D(this.slider0.value * this.slider3.value, this.slider1.value * this.slider3.value, this.slider2.value * this.slider3.value);
     p.velocity.addVec(forceVector);
   }
 }
