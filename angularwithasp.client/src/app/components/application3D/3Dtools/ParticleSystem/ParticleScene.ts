@@ -37,6 +37,7 @@ export class ParticleScene {
 
   private CreateThreeObjects() {
     for (var p = 0; p < this.particleSystem.Particles.length; p++) {
+
       const material = new THREE.MeshStandardMaterial({ color: new THREE.Color("rgb(20, 200, 200)"), wireframe: false });
       //const geometry = new THREE.TorusGeometry(1, 0.3, 90, 50);
       const geometry = new THREE.SphereGeometry(1, 20, 10);

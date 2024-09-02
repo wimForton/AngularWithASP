@@ -40,8 +40,8 @@
           </mat-expansion-panel>
         </div>
         <div class="controllers-title">
-          <p>
-            Operators
+          <p class="controllers-title">
+            Operators      
             <button mat-button [matMenuTriggerFor]="menu">Add Operator</button>
             <mat-menu #menu="matMenu">
               <div *ngFor="let forcetoadd of addForces">
@@ -52,7 +52,7 @@
         </div>
 
         <div *ngFor="let item of forcesParameters">
-          <mat-expansion-panel>
+          <mat-expansion-panel [expanded]="panelOpenIndex">
             <mat-expansion-panel-header>
               <mat-panel-title>{{item.name}}  </mat-panel-title>
             </mat-expansion-panel-header>
@@ -70,7 +70,7 @@
                 <input matSliderThumb [(ngModel)]="slider.value" #slider (input)="slider.onInputChange($event)">
               </mat-slider>
             </div>
-            <button (click)="RemoveForce(item)">remove</button>
+            <button mat-stroked-button (dblclick)="RemoveForce(item)">remove (double click)</button>
           </mat-expansion-panel>
         </div>
       </mat-accordion>

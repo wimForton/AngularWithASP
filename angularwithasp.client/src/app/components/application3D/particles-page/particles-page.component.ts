@@ -20,7 +20,8 @@ import { Vector } from '../3Dtools/Utils/trigFunctions';
 import { VectorForce } from '../3Dtools/ParticleSystem/forces/VectorForce';
 import { DragForce } from '../3Dtools/ParticleSystem/forces/DragForce';
 import { TurbulenceForce } from '../3Dtools/ParticleSystem/forces/TurbulenceForce';
-import { BounceForce } from '../3Dtools/ParticleSystem/forces/bounceForce';
+import { BounceForce } from '../3Dtools/ParticleSystem/forces/BounceForce';
+import { ScaleInOutForce } from '../3Dtools/ParticleSystem/forces/ScaleInOut';
 
 
 
@@ -55,6 +56,7 @@ export class ParticlesPageComponent {
   public emittersParameters: Array<ControlParameters> = [];
   public forcesParameters: Array<ControlParameters> = [];
   public addForces: Array<FunctionWithTrigger> = [];
+  public panelOpenIndex = 0;
 
   private particleSystem?: ParticleSystem;
 
@@ -109,12 +111,26 @@ export class ParticlesPageComponent {
       this.forcesParameters.push(controlParameters);
     }
 
+    function addForceToArrays(this: any, force: ForceClass) {
+      const controlParameters = new ControlParameters()
+      this.particleSystem.addForceClass(force);
+      controlParameters.name = force.name;
+      controlParameters.sliders = force.sliders;
+      controlParameters.id = this.forcesParameters.length;
+      this.forcesParameters.push(controlParameters);
+      //this.panelOpenIndex = this.forcesParameters.length;
+    }
 
+    this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new VectorForce()), "Vector Force"));
+    this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new DragForce()), "Drag Force"));
+    this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new TurbulenceForce()), "Turbulence Force"));
+    this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new BounceForce()), "Bounce Force"));
+    this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new ScaleInOutForce()), "Scale In Out"));
 
-    this.addForces.push(new FunctionWithTrigger(addVectorForce.bind(this), "Vector Force"));
-    this.addForces.push(new FunctionWithTrigger(addDragForce.bind(this), "Drag Force"));
-    this.addForces.push(new FunctionWithTrigger(addTurbForce.bind(this), "Turbulence Force"));
-    this.addForces.push(new FunctionWithTrigger(addBounceForce.bind(this), "Bounce Force"));
+    //this.addForces.push(new FunctionWithTrigger(addVectorForce.bind(this), "Vector Force"));
+    //this.addForces.push(new FunctionWithTrigger(addDragForce.bind(this), "Drag Force"));
+    //this.addForces.push(new FunctionWithTrigger(addTurbForce.bind(this), "Turbulence Force"));
+    //this.addForces.push(new FunctionWithTrigger(addBounceForce.bind(this), "Bounce Force"));
 
     for (var i = 0; i < this.particleSystem.GetEmitClasses().length; i++) {
       const controlParameters = new ControlParameters();
@@ -139,11 +155,8 @@ export class ParticlesPageComponent {
 
   }
   public RemoveForce(item: ControlParameters) {
-    if (confirm("Are you sure to delete " + item.name)) {
-      let index = this.forcesParameters.indexOf(item);
-      this.forcesParameters.splice(index, 1);
-      this.particleSystem?.GetForceClasses().splice(index, 1)
-      console.log(index);
-    }
+    let index = this.forcesParameters.indexOf(item);
+    this.forcesParameters.splice(index, 1);
+    this.particleSystem?.GetForceClasses().splice(index, 1)
   }
 }

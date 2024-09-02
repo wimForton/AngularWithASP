@@ -7,7 +7,8 @@ export class Particle {
   public rotationChangeVelocity: Vector3D = new Vector3D();
   public direction: Vector3D = new Vector3D();
   public directionChangeVelocity: Vector3D = new Vector3D();
-  public scale: Vector3D = new Vector3D();
+  public scale: Vector3D = new Vector3D(1,1,1);
+  public startscale: Vector3D = new Vector3D(1,1,1);
   public age: number = 0;
   public maxAge: number = 100;
   constructor() {

@@ -60,6 +60,7 @@ export class EmitFromPoint implements EmitClass{
     if (MinMaxRandomize(0, 20) < this.sliders[1].value) {
       let size = MinMaxRandomize(this.sliders[5].value, this.sliders[6].value);
       p.scale.set(size, size, size);
+      p.startscale.set(size, size, size);
       p.position.set(0, 0, 0);//(p.position.x, p.position.y, p.position.z)
       let min = -0.01 * this.sliders[0].value;
       let max = 0.01 * this.sliders[0].value;
