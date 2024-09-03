@@ -44,7 +44,7 @@ export class VectorForce implements ForceClass {
     this.slider3.step = precision;
     this.slider3.value = 0.1;
     this.sliders.push(this.slider3);
-    console.log("vectorforce added");
+    console.log("vectorforce created");
   }
 
   calculate(p: Particle, i: number): void {

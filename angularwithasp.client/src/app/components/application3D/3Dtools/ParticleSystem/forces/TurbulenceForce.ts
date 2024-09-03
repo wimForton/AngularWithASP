@@ -63,6 +63,7 @@ export class TurbulenceForce implements ForceClass {
     this.slider4.step = precision;
     this.slider4.value = 0.1;
     this.sliders.push(this.slider4);
+    console.log("TurbulenceForce created");
   }
 
   calculate(p: Particle, i: number): void {

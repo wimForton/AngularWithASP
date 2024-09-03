@@ -30,7 +30,7 @@ export class DragForce implements ForceClass {
     this.slider1.value = 0.1;
     this.sliders.push(this.slider1);
     
-
+    console.log("DragForce created");
   }
 
   calculate(p: Particle, i: number): void {

@@ -45,6 +45,7 @@ export class ScaleInOutForce implements ForceClass {
     this.slider3.step = precision;
     this.slider3.value = 0;
     this.sliders.push(this.slider3);
+    console.log("ScaleInOutForce created");
   }
 
   calculate(p: Particle, i: number): void {

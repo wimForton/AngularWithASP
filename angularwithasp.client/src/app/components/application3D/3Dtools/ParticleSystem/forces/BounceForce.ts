@@ -37,6 +37,7 @@ export class BounceForce implements ForceClass {
     this.slider2.step = precision;
     this.slider2.value = 0;
     this.sliders.push(this.slider2);
+    console.log("BounceForce created");
   }
 
   calculate(p: Particle, i: number): void {

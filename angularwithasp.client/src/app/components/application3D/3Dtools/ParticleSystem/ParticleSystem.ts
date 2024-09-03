@@ -1,4 +1,9 @@
 import { Slider } from "../../UiComponentData/Slider";
+import { BounceForce } from "./forces/BounceForce";
+import { DragForce } from "./forces/DragForce";
+import { ScaleInOutForce } from "./forces/ScaleInOut";
+import { TurbulenceForce } from "./forces/TurbulenceForce";
+import { VectorForce } from "./forces/VectorForce";
 import { Particle } from "./Particle";
 import { ParticleSystemData } from "./ParticleSystemData";
 
@@ -26,6 +31,7 @@ export class FunctionWithTrigger {
   constructor(fn: Function, name: string) {
     this.fn = fn;
     this.name = name;
+    console.log("FunctionWithTrigger name" + this.name);
   }
   public run() {
     this.fn();
@@ -37,9 +43,29 @@ export class ParticleSystem {
   Particles: Particle[] = [];
   private forceClasses: Array<ForceClass> = new Array<ForceClass>();
   private emitClasses: Array<EmitClass> = new Array<EmitClass>();
+
+  public emittersParameters: Array<ControlParameters> = [];
+  public forcesParameters: Array<ControlParameters> = [];
+  public addForces: Array<FunctionWithTrigger> = [];
+  public name = "";
   constructor(maxParticles: number) {
     this.maxParticles = maxParticles;
     this.initParticles();
+
+    function addForceToArrays(this: any, force: ForceClass) {///this whole function becomes the function in FunctionWithTrigger
+      const controlParameters = new ControlParameters()
+      this.addForceClass(force);
+      controlParameters.name = force.name;
+      controlParameters.sliders = force.sliders;
+      controlParameters.id = this.forcesParameters.length;
+      this.forcesParameters.push(controlParameters);
+    }
+
+    this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new VectorForce()), "Vector Force"));
+    this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new DragForce()), "Drag Force"));
+    this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new TurbulenceForce()), "Turbulence Force"));
+    this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new BounceForce()), "Bounce Force"));
+    this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new ScaleInOutForce()), "Scale In Out"));
   }
 
   private initParticles() {
