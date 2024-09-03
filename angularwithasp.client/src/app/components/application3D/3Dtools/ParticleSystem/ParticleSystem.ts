@@ -1,4 +1,5 @@
 import { Slider } from "../../UiComponentData/Slider";
+import { EmitFromPoint } from "./emitters/EmitFromPoint";
 import { BounceForce } from "./forces/BounceForce";
 import { DragForce } from "./forces/DragForce";
 import { ScaleInOutForce } from "./forces/ScaleInOut";
@@ -66,6 +67,14 @@ export class ParticleSystem {
     this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new TurbulenceForce()), "Turbulence Force"));
     this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new BounceForce()), "Bounce Force"));
     this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new ScaleInOutForce()), "Scale In Out"));
+    this.addEmitClass(new EmitFromPoint());
+    for (var i = 0; i < this.GetEmitClasses().length; i++) {
+      const controlParameters = new ControlParameters();
+      controlParameters.name = this.GetEmitClasses()[i].name;
+      controlParameters.sliders = this.GetEmitClasses()[i].sliders;
+      controlParameters.id = i;
+      this.emittersParameters.push(controlParameters);
+    }
   }
 
   private initParticles() {

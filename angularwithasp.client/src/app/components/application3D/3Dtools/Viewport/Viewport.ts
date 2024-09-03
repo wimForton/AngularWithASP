@@ -4,20 +4,24 @@ import { ParticleScene } from '../ParticleSystem/ParticleScene';
 
 export class Viewport {
   private renderer: THREE.WebGLRenderer;
-  private scene: THREE.Scene;
+  private scenes: Array<THREE.Scene> = [];
+  private scene: THREE.Scene = new THREE.Scene();
   private camera: THREE.PerspectiveCamera;
   private container: HTMLElement;
-  private particleScene: ParticleScene;
+  private particleScenes: Array<ParticleScene> = [];
   private containerProps = {
     x: 1,
     y: 1,
     width: 1,
     height: 1,
   };
-  constructor(particleScene: ParticleScene, containerid: string) {
-    this.particleScene = particleScene;
+  constructor(particleScenes: Array<ParticleScene>, containerid: string) {
+    this.particleScenes = particleScenes;
     //this.renderer = renderer;
-    this.scene = this.particleScene.scene;
+    for (let i = 0; i < this.particleScenes.length; i++) {
+      this.scene.add(this.particleScenes[i].scene);
+
+    }
     //this.camera = camera;
     this.container = document.getElementById(containerid)!;
     this.containerProps.x = this.container.offsetLeft;
@@ -55,7 +59,9 @@ export class Viewport {
   }
 
   public render() {
-    this.particleScene.Update();
+    for (let i = 0; i < this.particleScenes.length; i++) {
+    this.particleScenes[i].Update();
+    }
     this.renderer.render(this.scene, this.camera);
   }
 }

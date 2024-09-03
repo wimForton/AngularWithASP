@@ -10,16 +10,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Viewport } from '../3Dtools/Viewport/Viewport';
 import { ParticleScene } from '../3Dtools/ParticleSystem/ParticleScene';
-import { EmitClass, ControlParameters, ParticleSystem, ForceClass, FunctionWithTrigger } from '../3Dtools/ParticleSystem/ParticleSystem';
-import { EmitFromPoint } from '../3Dtools/ParticleSystem/emitters/EmitFromPoint';
+import { ControlParameters, ParticleSystem, FunctionWithTrigger } from '../3Dtools/ParticleSystem/ParticleSystem';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { VectorForce } from '../3Dtools/ParticleSystem/forces/VectorForce';
-import { DragForce } from '../3Dtools/ParticleSystem/forces/DragForce';
-import { TurbulenceForce } from '../3Dtools/ParticleSystem/forces/TurbulenceForce';
-import { BounceForce } from '../3Dtools/ParticleSystem/forces/BounceForce';
-import { ScaleInOutForce } from '../3Dtools/ParticleSystem/forces/ScaleInOut';
+
 
 
 
@@ -50,67 +45,28 @@ export class ParticlesPageComponent {
 
   public value = 0;
   private viewPort?: Viewport;
-  private particleScene?: ParticleScene;
-  public emittersParameters: Array<ControlParameters> = [];
-  public forcesParameters: Array<ControlParameters> = [];
+  private particleScenes: Array<ParticleScene> = [];
   public addForces: Array<FunctionWithTrigger> = [];
   public panelOpenIndex = 0;
 
-  private particleSystem?: ParticleSystem;
   public particleSystems: Array<ParticleSystem> = new Array<ParticleSystem>();
 
 
   ngOnInit(): void {
-    this.particleSystem = new ParticleSystem(200);
-    this.particleSystem.addEmitClass(new EmitFromPoint());
 
-    const particleSystem = new ParticleSystem(200);
-    particleSystem.addEmitClass(new EmitFromPoint());
-
+    const particleSystem = new ParticleSystem(20);
     const particleSystem2 = new ParticleSystem(200);
-    particleSystem2.addEmitClass(new EmitFromPoint());
+    const particleSystem3 = new ParticleSystem(200);
 
     this.particleSystems.push(particleSystem);
-
     this.particleSystems.push(particleSystem2);
-
-    //function addForceToArrays(this: any, force: ForceClass) {
-    //  const controlParameters = new ControlParameters()
-    //  this.particleSystem.addForceClass(force);
-    //  controlParameters.name = force.name;
-    //  controlParameters.sliders = force.sliders;
-    //  controlParameters.id = this.forcesParameters.length;
-    //  this.forcesParameters.push(controlParameters);
-    //}
-
-    //this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new VectorForce()), "Vector Force"));
-    //this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new DragForce()), "Drag Force"));
-    //this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new TurbulenceForce()), "Turbulence Force"));
-    //this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new BounceForce()), "Bounce Force"));
-    //this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new ScaleInOutForce()), "Scale In Out"));
+    this.particleSystems.push(particleSystem3);
 
 
-    //for (var i = 0; i < this.particleSystem.GetEmitClasses().length; i++) {
-    //  const controlParameters = new ControlParameters();
-    //  controlParameters.name = this.particleSystem.GetEmitClasses()[i].name;
-    //  controlParameters.sliders = this.particleSystem.GetEmitClasses()[i].sliders;
-    //  controlParameters.id = i;
-    //  this.emittersParameters.push(controlParameters);
-    //}
-
-    //for (var i = 0; i < this.particleSystem.GetForceClasses().length; i++) {
-    //  const controlParameters = new ControlParameters()
-    //  let force: ForceClass = this.particleSystem.GetForceClasses()[i]
-
-    //  controlParameters.name = force.name;
-    //  controlParameters.sliders = force.sliders;
-    //  controlParameters.id = i;
-    //  this.forcesParameters.push(controlParameters);
-    //}
-
-    this.particleScene = new ParticleScene(this.particleSystems[0]);
-    this.viewPort = new Viewport(this.particleScene, "container");
-
+    for (let i = 0; i < this.particleSystems.length; i++) {
+      this.particleScenes.push(new ParticleScene(this.particleSystems[i]));
+    }
+    this.viewPort = new Viewport(this.particleScenes, "container");
   }
   public RemoveForce(item: ControlParameters, particlesystem: ParticleSystem) {
     let index = particlesystem.forcesParameters.indexOf(item);
