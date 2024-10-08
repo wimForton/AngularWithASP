@@ -76,7 +76,5 @@ export class TurbulenceForce implements ForceClass {
     let nz = (this.noiseZ!.noise(lutPos.x + 1, lutPos.y, lutPos.z) - 0.5) * this.slider2.value * this.slider3.value;
 
     p.velocity.addVec(new Vector3D(nx, ny, nz));
-
-
   }
 }

@@ -6,7 +6,6 @@ import { ScaleInOutForce } from "./forces/ScaleInOut";
 import { TurbulenceForce } from "./forces/TurbulenceForce";
 import { VectorForce } from "./forces/VectorForce";
 import { Particle } from "./Particle";
-import { ParticleSystemData } from "./ParticleSystemData";
 
 
 export class ControlParameters {
@@ -93,6 +92,11 @@ export class ParticleSystem {
   public addEmitClass(emitClass: EmitClass) {
     this.emitClasses.push(emitClass);
   }
+
+  public GetParticles(): Particle[] {
+    return this.Particles;
+  }
+
   public GetEmitClasses(): EmitClass[] {
     return this.emitClasses;
   }

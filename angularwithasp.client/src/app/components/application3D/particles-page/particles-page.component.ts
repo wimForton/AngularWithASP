@@ -54,13 +54,13 @@ export class ParticlesPageComponent {
 
   ngOnInit(): void {
 
-    const particleSystem = new ParticleSystem(20);
-    const particleSystem2 = new ParticleSystem(200);
-    const particleSystem3 = new ParticleSystem(200);
+    const particleSystem = new ParticleSystem(600);
+    //const particleSystem2 = new ParticleSystem(200);
+    //const particleSystem3 = new ParticleSystem(200);
 
     this.particleSystems.push(particleSystem);
-    this.particleSystems.push(particleSystem2);
-    this.particleSystems.push(particleSystem3);
+    //this.particleSystems.push(particleSystem2);
+    //this.particleSystems.push(particleSystem3);
 
 
     for (let i = 0; i < this.particleSystems.length; i++) {
