@@ -1,13 +1,13 @@
 import { Slider } from "../../../UiComponentData/Slider";
-import { MinMaxRandomize, MinMaxRandomizeArray, lerp, lerpVector3D } from "../../Utils/particleUtils";
+import { lerpVector3D } from "../../Utils/particleUtils";
 import { Vector3D } from "../../Utils/Vector3D";
 import { Particle } from "../Particle";
-import { EmitClass, ForceClass } from "../ParticleSystem";
+import { IForceClass } from "./IForceClass";
 
 
 
 
-export class ScaleInOutForce implements ForceClass {
+export class ScaleInOutForce implements IForceClass {
   public name = "Scale In Out Force";
   public sliders: Slider[] = [];
   private slider0 = new Slider();

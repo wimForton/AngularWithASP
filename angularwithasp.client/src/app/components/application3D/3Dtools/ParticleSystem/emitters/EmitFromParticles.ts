@@ -1,12 +1,12 @@
 import { Slider } from "../../../UiComponentData/Slider";
 import { MinMaxRandomize, MinMaxRandomizeArray } from "../../Utils/particleUtils";
 import { Particle } from "../Particle";
-import { EmitClass } from "../ParticleSystem";
+import { IEmitClass } from "./IEmitClass";
 
 
 
 
-export class EmitFromPoint implements EmitClass{
+export class EmitFromPoint implements IEmitClass{
   public name = "Emit From Point";
   public sliders: Slider[] = [];
   constructor() {

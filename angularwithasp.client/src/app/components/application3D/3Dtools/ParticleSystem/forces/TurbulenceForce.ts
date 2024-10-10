@@ -1,14 +1,13 @@
 import { Slider } from "../../../UiComponentData/Slider";
 import { noise } from "../../Utils/noise";
-import { MinMaxRandomize, MinMaxRandomizeArray } from "../../Utils/particleUtils";
 import { Vector3D } from "../../Utils/Vector3D";
 import { Particle } from "../Particle";
-import { EmitClass, ForceClass } from "../ParticleSystem";
+import { IForceClass } from "./IForceClass";
 
 
 
 
-export class TurbulenceForce implements ForceClass {
+export class TurbulenceForce implements IForceClass {
 
   public name = "Turbulence Force";
   public sliders: Slider[] = [];

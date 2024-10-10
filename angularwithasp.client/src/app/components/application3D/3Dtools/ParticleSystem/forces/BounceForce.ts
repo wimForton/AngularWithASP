@@ -2,12 +2,12 @@ import { Slider } from "../../../UiComponentData/Slider";
 import { MinMaxRandomize, MinMaxRandomizeArray } from "../../Utils/particleUtils";
 import { Vector3D } from "../../Utils/Vector3D";
 import { Particle } from "../Particle";
-import { EmitClass, ForceClass } from "../ParticleSystem";
+import { IForceClass } from "./IForceClass";
 
 
 
 
-export class BounceForce implements ForceClass {
+export class BounceForce implements IForceClass {
   public name = "Bounce Force";
   public sliders: Slider[] = [];
   private slider0 = new Slider();
