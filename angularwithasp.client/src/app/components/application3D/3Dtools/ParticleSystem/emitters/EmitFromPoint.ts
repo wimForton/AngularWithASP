@@ -56,7 +56,8 @@ export class EmitFromPoint implements EmitClass{
   }
 
   emit(p: Particle, i: number): void {
-    p.position.z = 1000;
+    p.position.z = 100;
+    p.scale.set(0,0,0);
     if (MinMaxRandomize(0, 20) < this.sliders[1].value) {
       let size = MinMaxRandomize(this.sliders[5].value, this.sliders[6].value);
       p.scale.set(size, size, size);

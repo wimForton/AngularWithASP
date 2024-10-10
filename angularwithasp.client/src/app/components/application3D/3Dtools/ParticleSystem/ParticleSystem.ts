@@ -79,7 +79,8 @@ export class ParticleSystem {
   private initParticles() {
     for (var p = 0; p < this.maxParticles; p++) {
       let particle = new Particle();
-      particle.position.z = 1000;
+      particle.position.z = 100;
+      particle.scale.set(0,0,0);
       particle.age = particle.maxAge + 1;
       this.Particles.push(particle);
     }
@@ -110,14 +111,15 @@ export class ParticleSystem {
       let particle = this.Particles[p];
       if (particle.age > particle.maxAge) {
         for (var e = 0; e < this.emitClasses.length; e++) {
-          this.emitClasses[e].emit(particle, p)
+          this.emitClasses[e].emit(particle, p)////try rebirth
         }
-        
+
+      } else {
+        for (var f = 0; f < this.forceClasses.length; f++) {
+          this.forceClasses[f].calculate(particle, p);
+        }
       }
 
-      for (var f = 0; f < this.forceClasses.length; f++) {
-        this.forceClasses[f].calculate(particle, p);
-      }
       let newX = particle.position.x + particle.velocity.x;//particle.position.x + particle.velocity.x;
       let newY = particle.position.y + particle.velocity.y;
       let newZ = particle.position.z + particle.velocity.z;
