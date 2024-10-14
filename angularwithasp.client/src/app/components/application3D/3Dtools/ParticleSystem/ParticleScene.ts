@@ -14,7 +14,7 @@ export class ParticleScene {
   }
 
   private CreateSceneLights() {
-    this.scene.fog = new THREE.Fog(new THREE.Color("rgb(50, 50, 50)"), 10, 25);
+    this.scene.fog = new THREE.Fog(new THREE.Color("rgb(50, 50, 50)"), 10, 15);
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
     //this.scene.add(ambientLight);
     const pointLight = new THREE.PointLight(0xffffff, 15);

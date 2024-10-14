@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatSliderModule } from '@angular/material/slider';
@@ -34,14 +34,14 @@ import { MatButtonModule } from '@angular/material/button';
     MatMenuModule,
     MatButtonModule,
     MatTabsModule,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './particles-page.component.html',
   styleUrl: './particles-page.component.css'
 })
 
 
-export class ParticlesPageComponent {
+export class ParticlesPageComponent implements AfterViewInit {
 
   public value = 0;
   private viewPort?: Viewport;
@@ -51,23 +51,45 @@ export class ParticlesPageComponent {
 
   public particleSystems: Array<ParticleSystem> = new Array<ParticleSystem>();
 
+  @ViewChild('viewportcontainer', { read: ElementRef, static:false })//@ViewChild('viewportcontainer', { read: ElementRef })
+  viewportcontainer!: ElementRef;
 
-  ngOnInit(): void {
+  //ngOnInit(): void{
+  //  if (this.viewPort != undefined) {
+  //    this.viewPort?.render();
+  //  }
+  //}
 
-    const particleSystem = new ParticleSystem(600);
-    //const particleSystem2 = new ParticleSystem(200);
-    //const particleSystem3 = new ParticleSystem(200);
+  ngAfterViewInit(): void {
+    var container: HTMLElement = this.viewportcontainer.nativeElement;
 
-    this.particleSystems.push(particleSystem);
-    //this.particleSystems.push(particleSystem2);
-    //this.particleSystems.push(particleSystem3);
+    setTimeout(() => {
+      console.log("container:", container);
+
+      const particleSystem = new ParticleSystem(30);
+      const particleSystem2 = new ParticleSystem(200);
+      //const particleSystem3 = new ParticleSystem(200);
+
+      this.particleSystems.push(particleSystem);
+      this.particleSystems.push(particleSystem2);
+      //this.particleSystems.push(particleSystem3);
 
 
-    for (let i = 0; i < this.particleSystems.length; i++) {
-      this.particleScenes.push(new ParticleScene(this.particleSystems[i]));
-    }
-    this.viewPort = new Viewport(this.particleScenes, "container");
+      for (let i = 0; i < this.particleSystems.length; i++) {
+        this.particleScenes.push(new ParticleScene(this.particleSystems[i]));
+      }
+      this.viewPort = new Viewport(this.particleScenes, "container", container);
+
+    }, 50);
+    console.log("containeraftertimeout:", container);
+
   }
+
+  public getParticleSystemId(particlesystem: ParticleSystem): number {
+    let index = this.particleSystems.indexOf(particlesystem) + 1;
+    return index;
+  }
+
   public RemoveForce(item: ControlParameters, particlesystem: ParticleSystem) {
     let index = particlesystem.forcesParameters.indexOf(item);
     particlesystem.forcesParameters.splice(index, 1);

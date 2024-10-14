@@ -9,13 +9,16 @@ export class Viewport {
   private camera: THREE.PerspectiveCamera;
   private container: HTMLElement;
   private particleScenes: Array<ParticleScene> = [];
+  private divready: boolean = false;
+  private testcounter: number = 0;
+
   private containerProps = {
     x: 1,
     y: 1,
     width: 1,
     height: 1,
   };
-  constructor(particleScenes: Array<ParticleScene>, containerid: string) {
+  constructor(particleScenes: Array<ParticleScene>, containerid: string, container: HTMLElement) {
     this.particleScenes = particleScenes;
     //this.renderer = renderer;
     for (let i = 0; i < this.particleScenes.length; i++) {
@@ -23,7 +26,8 @@ export class Viewport {
 
     }
     //this.camera = camera;
-    this.container = document.getElementById(containerid)!;
+    //this.container = document.getElementById(containerid)!;
+    this.container = container;
     this.containerProps.x = this.container.offsetLeft;
     this.containerProps.y = this.container.offsetTop;
     this.containerProps.width = this.container.offsetWidth;
@@ -58,10 +62,33 @@ export class Viewport {
     });
   }
 
-  public render() {
-    for (let i = 0; i < this.particleScenes.length; i++) {
-    this.particleScenes[i].Update();
-    }
+  public reset() {
+    this.containerProps.x = this.container.offsetLeft;
+    this.containerProps.y = this.container.offsetTop;
+    this.containerProps.width = this.container.offsetWidth;
+    this.containerProps.height = this.container.offsetHeight;
+    this.camera.aspect = this.containerProps.width / this.containerProps.height;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(this.containerProps.width, this.containerProps.height);
+    this.renderer.setPixelRatio(window.devicePixelRatio)
     this.renderer.render(this.scene, this.camera);
+    console.log("containerreset:", this.container.offsetWidth, "delay :", this.testcounter);
+  }
+
+  public render() {
+    if (this.container.offsetWidth != 0 && !this.divready) {
+      this.reset();
+      this.divready = true;
+    }
+    else if (this.divready) {
+      for (let i = 0; i < this.particleScenes.length; i++) {
+        this.particleScenes[i].Update();
+      }
+      this.renderer.render(this.scene, this.camera);
+
+    } else {
+      this.testcounter++;
+    }
+    //console.log("render:", this.container.offsetWidth);
   }
 }

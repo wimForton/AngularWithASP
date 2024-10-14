@@ -9,13 +9,16 @@
 <div class="midsection">
   <section>
 
-    <div class="left" id="container">
+    <div class="left" id="container" #viewportcontainer>
 
     </div>
 
     <div class="right" id="containerB">
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
-        <mat-tab *ngFor="let particlesystem of particleSystems" label="label">
+        <mat-tab *ngFor="let particlesystem of particleSystems">
+          <ng-template mat-tab-label class="controllers-title"><p>Particles
+            {{getParticleSystemId(particlesystem)}}</p>
+          </ng-template>
           <div class="controllers-title">
             <p>Emitter</p>
           </div>
@@ -54,7 +57,8 @@
             </div>
 
             <div *ngFor="let item of particlesystem.forcesParameters">
-              <mat-expansion-panel [expanded]="panelOpenIndex"><!--zorgt er voor dat nieuw paneel vanzelf opent-->
+              <mat-expansion-panel [expanded]="panelOpenIndex">
+                <!--zorgt er voor dat nieuw paneel vanzelf opent-->
                 <mat-expansion-panel-header>
                   <mat-panel-title>{{item.name}}  </mat-panel-title>
                 </mat-expansion-panel-header>
