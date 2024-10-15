@@ -67,18 +67,28 @@ export class ParticlesPageComponent implements AfterViewInit {
     setTimeout(() => {
       console.log("container:", container);
 
-      const particleSystem = new ParticleSystem(30);
-      const particleSystem2 = new ParticleSystem(200);
+      const particleSystem = new ParticleSystem(2);
+      const particleSystem2 = new ParticleSystem(3);
       //const particleSystem3 = new ParticleSystem(200);
+
+      let particleSystemstemp: Array<ParticleSystem> = new Array<ParticleSystem>();
 
       this.particleSystems.push(particleSystem);
       this.particleSystems.push(particleSystem2);
       //this.particleSystems.push(particleSystem3);
 
+      const jsontest: string = JSON.stringify(this.particleSystems);
+      console.log("Jsonstring ",jsontest);
+      particleSystemstemp = JSON.parse(jsontest);
+      console.log("object", particleSystemstemp);
 
       for (let i = 0; i < this.particleSystems.length; i++) {
         this.particleScenes.push(new ParticleScene(this.particleSystems[i]));
       }
+      //for (let i = 0; i < particleSystemstemp.length; i++) {
+      //  this.particleScenes.push(new ParticleScene(particleSystemstemp[i]));
+      //}
+
       this.viewPort = new Viewport(this.particleScenes, "container", container);
 
     }, 50);
