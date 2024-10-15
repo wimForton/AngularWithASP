@@ -29,8 +29,16 @@ mat-panel-title {
   border-radius: 6px;
   color: white;
 }
+
+.example-margin {
+  color: white;
+  background-color: white;
+  border-radius: 6px;
+  padding-right: 6px;
+  margin-left: 6px;
+}
 button {
-    margin-left: 10px;
+  margin-left: 10px;
   background-color: white;
 }
 .controllers-title {

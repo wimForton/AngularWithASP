@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 //import { Application3DComponent } from './components/application3D/application-3D.component';
 import { ParticlesPageComponent } from './components/application3D/particles-page/particles-page.component';
+import { HomeComponent } from './components/homepage/home/home.component';
 import { FormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
 
@@ -18,7 +19,7 @@ interface WeatherForecast {
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
     standalone: true,
-  imports: [ParticlesPageComponent, FormsModule, MatTabsModule]
+  imports: [ParticlesPageComponent, HomeComponent, FormsModule, MatTabsModule]
 })
 export class AppComponent implements OnInit {
   public forecasts: WeatherForecast[] = [];

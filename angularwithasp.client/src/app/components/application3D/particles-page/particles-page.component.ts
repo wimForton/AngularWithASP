@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, AfterViewInit, AfterViewChecked, model } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatSliderModule } from '@angular/material/slider';
@@ -48,6 +48,7 @@ export class ParticlesPageComponent implements AfterViewInit {
   private particleScenes: Array<ParticleScene> = [];
   public addForces: Array<FunctionWithTrigger> = [];
   public panelOpenIndex = 0;
+  readonly checked = model(false);
 
   public particleSystems: Array<ParticleSystem> = new Array<ParticleSystem>();
 

@@ -20,7 +20,10 @@
             {{getParticleSystemId(particlesystem)}}</p>
           </ng-template>
           <div class="controllers-title">
-            <p>Emitter</p>
+            <p>
+              Emitter
+              <mat-checkbox class="example-margin" [(ngModel)]="checked">enable</mat-checkbox>
+            </p>
           </div>
           <mat-accordion mutli="false">
             <div *ngFor="let item of particlesystem.emittersParameters">
