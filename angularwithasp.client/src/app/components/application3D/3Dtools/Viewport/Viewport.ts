@@ -4,7 +4,7 @@ import { ParticleScene } from '../ParticleSystem/ParticleScene';
 
 export class Viewport {
   private renderer: THREE.WebGLRenderer;
-  private scenes: Array<THREE.Scene> = [];
+  //private scenes: Array<THREE.Scene> = [];
   private scene: THREE.Scene = new THREE.Scene();
   private camera: THREE.PerspectiveCamera;
   private container: HTMLElement;
@@ -60,6 +60,19 @@ export class Viewport {
       this.renderer.setPixelRatio(window.devicePixelRatio)
       this.renderer.render(this.scene, this.camera);
     });
+  }
+
+  public clear() {
+    this.scene.clear();
+    this.particleScenes = [];
+  }
+  public AddScenes(pscenes: ParticleScene[]) {
+
+    for (let i = 0; i < pscenes.length; i++) {
+
+      this.scene.add(pscenes[i].scene);
+      this.particleScenes.push(pscenes[i]);
+    }
   }
 
   public reset() {

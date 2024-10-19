@@ -4,7 +4,12 @@
 
 </head>
 <header>
-  <h2>Particles</h2>
+  <h2>
+    Particles
+    <button mat-raised-button (click)="LoadParticles()">Load preset</button>
+    <button mat-raised-button (click)="SaveParticles()">Save preset (console log)</button>
+
+  </h2>
 </header>
 <div class="midsection">
   <section>
@@ -16,8 +21,11 @@
     <div class="right" id="containerB">
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab *ngFor="let particlesystem of particleSystems">
-          <ng-template mat-tab-label class="controllers-title"><p>Particles
-            {{getParticleSystemId(particlesystem)}}</p>
+          <ng-template mat-tab-label class="controllers-title">
+            <p>
+              Particles
+              {{getParticleSystemId(particlesystem)}}
+            </p>
           </ng-template>
           <div class="controllers-title">
             <p>
@@ -58,28 +66,12 @@
                 </mat-menu>
               </p>
             </div>
-
-            <div *ngFor="let item of particlesystem.forcesParameters">
+            <div *ngFor="let item of particlesystem.forceClasses">
               <mat-expansion-panel [expanded]="panelOpenIndex">
-                <!--zorgt er voor dat nieuw paneel vanzelf opent-->
                 <mat-expansion-panel-header>
                   <mat-panel-title>{{item.name}}  </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div *ngFor="let slider of item.sliders">
-                  <mat-form-field class="example-margin example-width" style="width: 100px; padding: 0px" (input)="slider.onInputChange($event)">
-                    <mat-label>{{slider.label}}</mat-label>
-                    <input matInput type="number" [(ngModel)]="slider.value">
-                  </mat-form-field>
-                  <mat-slider class="example-margin"
-                              [disabled]="slider.disabled"
-                              [max]="slider.max"
-                              [min]="slider.min"
-                              [step]="slider.step"
-                              [discrete]="slider.thumbLabel">
-                    <input matSliderThumb [(ngModel)]="slider.value" #slider (input)="slider.onInputChange($event)">
-                  </mat-slider>
-                </div>
-                <button mat-stroked-button (dblclick)="RemoveForce(item, particlesystem)">remove (double click)</button>
+                <app-panelselector [component]="item.name" [forceinstance]="item"></app-panelselector>
               </mat-expansion-panel>
             </div>
           </mat-accordion>

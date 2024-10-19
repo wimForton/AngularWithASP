@@ -10,69 +10,37 @@ import { IForceClass } from "./IForceClass";
 export class TurbulenceForce implements IForceClass {
 
   public name = "Turbulence Force";
-  public sliders: Slider[] = [];
-  private slider0 = new Slider();
-  private slider1 = new Slider();
-  private slider2 = new Slider();
-  private slider3 = new Slider();
-  private slider4 = new Slider();
+  //public sliders: Slider[] = [];
+
+  public value1 = 0.5;
+  public value2 = 0.5;
+  public value3 = 0.5;
+  public value4 = 0.1;
+  public value5 = 0.1;
+
   private noiseX?: noise;
   private noiseY?: noise;
   private noiseZ?: noise;
   private offsetMove = 0;
   constructor() {
-    let precision = 0.001;
-
     this.noiseX = new noise(20);
     this.noiseY = new noise(20);
     this.noiseZ = new noise(20);
+  }
 
-
-    this.slider0.label = "Force X";
-    this.slider0.min = 0;
-    this.slider0.max = 1;
-    this.slider0.step = precision;
-    this.slider0.value = 0.5;
-    this.sliders.push(this.slider0);
-
-    this.slider1.label = "Force Y";
-    this.slider1.min = 0;
-    this.slider1.max = 1;
-    this.slider1.step = precision;
-    this.slider1.value = 0.5;
-    this.sliders.push(this.slider1);
-
-    this.slider2.label = "Force Z";
-    this.slider2.min = 0;
-    this.slider2.max = 1;
-    this.slider2.step = precision;
-    this.slider2.value = 0.5;
-    this.sliders.push(this.slider2);
-
-    this.slider3.label = "Force Scale";
-    this.slider3.min = 0;
-    this.slider3.max = 1;
-    this.slider3.step = precision;
-    this.slider3.value = 0.1;
-    this.sliders.push(this.slider3);
-
-    this.slider4.label = "Turb Density";
-    this.slider4.min = 0;
-    this.slider4.max = 1;
-    this.slider4.step = precision;
-    this.slider4.value = 0.1;
-    this.sliders.push(this.slider4);
-    console.log("TurbulenceForce created");
+  getparameterstosave(): any {
+    let param = { name: this.name, value1: this.value1, value2: this.value2, value3: this.value3, value4: this.value4, value5: this.value5, };
+    return param;
   }
 
   calculate(p: Particle, i: number): void {
     let lutPos = new Vector3D(p.position.x, p.position.y, p.position.z);
-    lutPos.multNumber(this.slider4.value);
+    lutPos.multNumber(this.value5);
     this.offsetMove += 0.0001;
     lutPos.addVec(new Vector3D(0, this.offsetMove, 0));
-    let nx = (this.noiseX!.noise(lutPos.x + 1, lutPos.y, lutPos.z) - 0.5) * this.slider0.value * this.slider3.value;
-    let ny = (this.noiseY!.noise(lutPos.x + 0.5, lutPos.y, lutPos.z) - 0.5) * this.slider1.value * this.slider3.value;
-    let nz = (this.noiseZ!.noise(lutPos.x + 1, lutPos.y, lutPos.z) - 0.5) * this.slider2.value * this.slider3.value;
+    let nx = (this.noiseX!.noise(lutPos.x + 1, lutPos.y, lutPos.z) - 0.5) * this.value1 * this.value4;
+    let ny = (this.noiseY!.noise(lutPos.x + 0.5, lutPos.y, lutPos.z) - 0.5) * this.value2 * this.value4;
+    let nz = (this.noiseZ!.noise(lutPos.x + 1, lutPos.y, lutPos.z) - 0.5) * this.value3 * this.value4;
 
     p.velocity.addVec(new Vector3D(nx, ny, nz));
   }

@@ -9,44 +9,26 @@ import { IForceClass } from "./IForceClass";
 
 export class BounceForce implements IForceClass {
   public name = "Bounce Force";
-  public sliders: Slider[] = [];
-  private slider0 = new Slider();
-  private slider1 = new Slider();
-  private slider2 = new Slider();
+  //public sliders: Slider[] = [];
 
-  constructor() {
-    let precision = 0.001;
+  public value1: number = -1;
+  public value2 = 0;
+  public value3 = 0;
+  public value4 = 0;
 
-    this.slider0.label = "Floor Level";
-    this.slider0.min = -10;
-    this.slider0.max = 10;
-    this.slider0.step = precision;
-    this.slider0.value = -5;
-    this.sliders.push(this.slider0);
 
-    this.slider1.label = "Roughness X";
-    this.slider1.min = 0;
-    this.slider1.max = 1;
-    this.slider1.step = precision;
-    this.slider1.value = 0;
-    this.sliders.push(this.slider1);
-
-    this.slider2.label = "Roughness Z";
-    this.slider2.min = 0;
-    this.slider2.max = 1;
-    this.slider2.step = precision;
-    this.slider2.value = 0;
-    this.sliders.push(this.slider2);
-    console.log("BounceForce created");
+  getparameterstosave(): any {
+    let param = { name: this.name, value1: this.value1, value2: this.value2, value3: this.value3, value4: this.value4, };
+    return param;
   }
 
   calculate(p: Particle, i: number): void {
-    if (p.position.y < this.slider0.value) {
-      let randomVecX = MinMaxRandomize(this.slider1.value * -1, this.slider1.value);
-      let randomVecY = MinMaxRandomize(this.slider2.value * -1, this.slider2.value);
+    if (p.position.y < this.value1) {
+      let randomVecX = MinMaxRandomize(this.value2 * -1, this.value2);
+      let randomVecY = MinMaxRandomize(this.value3 * -1, this.value3);
       p.velocity.addVec(new Vector3D(randomVecX, 0, randomVecY));
-      p.velocity.multVec(new Vector3D(1, -1, 1));
-      p.position.set(p.position.x, this.slider0.value + 0.001, p.position.z);
+      p.velocity.multVec(new Vector3D(1 - this.value4, (-1 + this.value4), 1 - this.value4));
+      p.position.set(p.position.x, this.value1 + 0.001, p.position.z);
     }
 
   }

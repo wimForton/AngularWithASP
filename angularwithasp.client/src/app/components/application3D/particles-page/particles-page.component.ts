@@ -10,10 +10,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Viewport } from '../3Dtools/Viewport/Viewport';
 import { ParticleScene } from '../3Dtools/ParticleSystem/ParticleScene';
-import { ControlParameters, ParticleSystem, FunctionWithTrigger } from '../3Dtools/ParticleSystem/ParticleSystem';
+import { ControlParameters, ParticleSystem, FunctionWithTrigger, ParticleParameterGroup } from '../3Dtools/ParticleSystem/ParticleSystem';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import { PanelSelectorComponent } from '../3Dtools/ParticleSystem/AngularComponents/ForceComponents/panelselector.component';
+import { Load, Save } from '../3Dtools/ParticleSystem/LoadSave/LoadSave';
+import { EmitFromPoint } from '../3Dtools/ParticleSystem/emitters/EmitFromParticles';
 
 
 
@@ -35,6 +38,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
     MatTabsModule,
     CommonModule,
+    PanelSelectorComponent
   ],
   templateUrl: './particles-page.component.html',
   styleUrl: './particles-page.component.css'
@@ -50,6 +54,7 @@ export class ParticlesPageComponent implements AfterViewInit {
   public panelOpenIndex = 0;
   readonly checked = model(false);
 
+  //private loadsave = LoadSave.instance;
   public particleSystems: Array<ParticleSystem> = new Array<ParticleSystem>();
 
   @ViewChild('viewportcontainer', { read: ElementRef, static:false })//@ViewChild('viewportcontainer', { read: ElementRef })
@@ -66,34 +71,43 @@ export class ParticlesPageComponent implements AfterViewInit {
 
     setTimeout(() => {
       console.log("container:", container);
+      
 
-      const particleSystem = new ParticleSystem(2);
-      const particleSystem2 = new ParticleSystem(3);
+      const particleSystem = new ParticleSystem(200);
+
+      //particleSystem.addEmitClass(new EmitFromPoint());
+
+      //particleSystem.addForceClass()
+      //const particleSystem2 = new ParticleSystem(3);
       //const particleSystem3 = new ParticleSystem(200);
 
-      let particleSystemstemp: Array<ParticleSystem> = new Array<ParticleSystem>();
-
       this.particleSystems.push(particleSystem);
-      this.particleSystems.push(particleSystem2);
+      //this.particleSystems.push(particleSystem2);
       //this.particleSystems.push(particleSystem3);
 
-      const jsontest: string = JSON.stringify(this.particleSystems);
-      console.log("Jsonstring ",jsontest);
-      particleSystemstemp = JSON.parse(jsontest);
-      console.log("object", particleSystemstemp);
+
 
       for (let i = 0; i < this.particleSystems.length; i++) {
         this.particleScenes.push(new ParticleScene(this.particleSystems[i]));
       }
-      //for (let i = 0; i < particleSystemstemp.length; i++) {
-      //  this.particleScenes.push(new ParticleScene(particleSystemstemp[i]));
-      //}
 
       this.viewPort = new Viewport(this.particleScenes, "container", container);
 
     }, 50);
     console.log("containeraftertimeout:", container);
 
+  }
+
+  public LoadParticles() {
+    //this.viewPort!.clear();
+    //this.particleSystems = [];
+    //this.particleScenes = [];
+    Load(this.particleSystems, this.particleScenes, this.viewPort!);
+    console.log("particleScenes length", this.particleScenes.length);
+  }
+  public SaveParticles() {
+    let particleparametergroup: ParticleParameterGroup = new ParticleParameterGroup(this.particleSystems);
+    Save(particleparametergroup);
   }
 
   public getParticleSystemId(particlesystem: ParticleSystem): number {

@@ -29,11 +29,26 @@ export class FunctionWithTrigger {
   }
 }
 
+export class ParticleParameterGroup {
+  public particlesystems: ParticleSystem[] = [];
+  constructor(particlesystems: ParticleSystem[]) {
+    this.particlesystems = particlesystems;
+  }
+
+  getparameterstosave(): any {
+    let particleparams: any[] = [];
+    for (let p = 0; p < this.particlesystems.length; p++) {
+      particleparams.push(this.particlesystems[p].getparameterstosave());
+    }
+    return particleparams;
+  }
+}
+
 export class ParticleSystem {
   maxParticles: number = 0;
   Particles: Particle[] = [];
-  private forceClasses: Array<IForceClass> = new Array<IForceClass>();
-  private emitClasses: Array<IEmitClass> = new Array<IEmitClass>();
+  public forceClasses: Array<IForceClass> = new Array<IForceClass>();
+  public emitClasses: Array<IEmitClass> = new Array<IEmitClass>();
 
   public emittersParameters: Array<ControlParameters> = [];
   public forcesParameters: Array<ControlParameters> = [];
@@ -47,7 +62,7 @@ export class ParticleSystem {
       const controlParameters = new ControlParameters()
       this.addForceClass(force);
       controlParameters.name = force.name;
-      controlParameters.sliders = force.sliders;
+      //controlParameters.sliders = force.sliders;
       controlParameters.id = this.forcesParameters.length;
       this.forcesParameters.push(controlParameters);
     }
@@ -57,7 +72,7 @@ export class ParticleSystem {
     this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new TurbulenceForce()), "Turbulence Force"));
     this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new BounceForce()), "Bounce Force"));
     this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new ScaleInOutForce()), "Scale In Out"));
-    this.addEmitClass(new EmitFromPoint());
+    this.addEmitClass(new EmitFromPoint());// todo: add this after creation
     for (var i = 0; i < this.GetEmitClasses().length; i++) {
       const controlParameters = new ControlParameters();
       controlParameters.name = this.GetEmitClasses()[i].name;
@@ -75,6 +90,15 @@ export class ParticleSystem {
       particle.age = particle.maxAge + 1;
       this.Particles.push(particle);
     }
+  }
+
+  getparameterstosave(): any {
+    let forceparam: any[] = [];
+    for (let f = 0; f < this.GetForceClasses().length; f++) {
+      forceparam.push(this.GetForceClasses()[f].getparameterstosave());
+    }
+    let param = { name: this.name, maxParticles: this.maxParticles, forceparam: forceparam };
+    return param;
   }
 
   public addForceClass(forceclass: IForceClass) {

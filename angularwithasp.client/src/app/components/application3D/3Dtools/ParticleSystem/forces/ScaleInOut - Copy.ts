@@ -9,15 +9,51 @@ import { IForceClass } from "./IForceClass";
 
 export class ScaleInOutForce implements IForceClass {
   public name = "Scale In Out Force";
-  //public sliders: Slider[] = [];
+  public sliders: Slider[] = [];
+  private slider0 = new Slider();
+  private slider1 = new Slider();
+  private slider2 = new Slider();
+  private slider3 = new Slider();
   public value1 = 0;
   public value2 = 0;
   public value3 = 0;
   public value4 = 0;
 
+  constructor() {
+    let precision = 0.001;
+
+    this.slider0.label = "Ease In End";
+    this.slider0.min = 0;
+    this.slider0.max = 1;
+    this.slider0.step = precision;
+    this.slider0.value = 0.05;
+    this.sliders.push(this.slider0);
+
+    this.slider1.label = "Ease Out Start";
+    this.slider1.min = 0;
+    this.slider1.max = 1;
+    this.slider1.step = precision;
+    this.slider1.value = 0.8;
+    this.sliders.push(this.slider1);
+
+    this.slider2.label = "Startscale";
+    this.slider2.min = 0;
+    this.slider2.max = 1;
+    this.slider2.step = precision;
+    this.slider2.value = 0;
+    this.sliders.push(this.slider2);
+
+    this.slider3.label = "Endscale";
+    this.slider3.min = 0;
+    this.slider3.max = 1;
+    this.slider3.step = precision;
+    this.slider3.value = 0;
+    this.sliders.push(this.slider3);
+    console.log("ScaleInOutForce created");
+  }
 
   getparameterstosave(): any {
-    let param = { name: this.name, value1: this.value1, value2: this.value2, value3: this.value3, value4: this.value4, };
+    let param = { value1: this.value1, value2: this.value2, value3: this.value3, value4: this.value4, };
     return param;
   }
 

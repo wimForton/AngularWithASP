@@ -8,6 +8,10 @@ export class Slider {
   value: number = 0;
   label: string = "unnamed";
 
+  constructor(min: number = 0, max: number = 1, step: number = 0.01, value: number = 0, label: string = "unnamed", showticks: boolean = false, disabled: boolean = false) {
+
+  }
+
   public onInputChange(event: Event) {
     this.value = +((event.target as HTMLInputElement).value);// + = string to number
   }
