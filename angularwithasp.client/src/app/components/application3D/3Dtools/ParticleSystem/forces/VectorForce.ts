@@ -14,6 +14,7 @@ export class VectorForce implements IForceClass {
   public value2 = -0.1;
   public value3 = 0;
   public value4 = 0.1;
+  public testbool = true;
 
 
   getparameterstosave(): any {

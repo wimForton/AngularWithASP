@@ -11,13 +11,13 @@ import { ParticleParameterGroup, ParticleSystem } from "../ParticleSystem";
 declare var require: any;
 
 
-export function Load(particlesystems: ParticleSystem[], particleScenes: ParticleScene[], viewPort: Viewport) {
+export function Load(particlesystems: ParticleSystem[], particleScenes: ParticleScene[], viewPort: Viewport, json: any) {
   //cleanup
   particlesystems.splice(0, particlesystems.length);
   particleScenes.splice(0, particleScenes.length);
   viewPort.clear();
   //read json
-  let json = require('./json.json');
+
 
   for (let j = 0; j < json.length; j++) {
     console.log("json maxParticles:", json[j].maxParticles);
@@ -27,7 +27,7 @@ export function Load(particlesystems: ParticleSystem[], particleScenes: Particle
     for (let f = 0; f < particlesystemdata.forceparam.length; f++) {
       let forcedata = particlesystemdata.forceparam[f];
 
-      console.log("json forceparam:", forcedata.name);
+      //console.log("json forceparam:", forcedata.name);
 
       if (forcedata.name == "Vector Force") {
         let force: VectorForce = new VectorForce();
@@ -35,6 +35,7 @@ export function Load(particlesystems: ParticleSystem[], particleScenes: Particle
         force.value2 = forcedata.value2;
         force.value3 = forcedata.value3;
         force.value4 = forcedata.value4;
+        force.testbool = forcedata.testbool;
         particleSystem.addForceClass(force)
       }
       if (forcedata.name == "Drag Force") {
@@ -78,7 +79,7 @@ export function Load(particlesystems: ParticleSystem[], particleScenes: Particle
     particleScenes.push(scene);
   }
   viewPort.AddScenes(particleScenes);
-  console.log("func particleScenes length after", particleScenes.length);
+  //console.log("func particleScenes length after", particleScenes.length);
 }
 
 export function Save(particleparametergroup: ParticleParameterGroup) {
@@ -105,47 +106,3 @@ export class SaveParameters {
 }
 
 
-//export class LoadSave {
-//  static #instance: LoadSave;
-
-//  /**
-//   * The Singleton's constructor should always be private to prevent direct
-//   * construction calls with the `new` operator.
-//   */
-//  private constructor() { }
-
-//  /**
-//   * The static getter that controls access to the singleton instance.
-//   *
-//   * This implementation allows you to extend the Singleton class while
-//   * keeping just one instance of each subclass around.
-//   */
-//  public static get instance(): LoadSave {
-//    if (!LoadSave.#instance) {
-//      LoadSave.#instance = new LoadSave();
-//    }
-
-//    return LoadSave.#instance;
-//  }
-
-//  /**
-//   * Finally, any singleton can define some business logic, which can be
-//   * executed on its instance.
-//   */
-
-//  public Save(particlesystem: ParticleSystem) {
-//    const jsontest: string = JSON.stringify(particlesystem);
-//    console.log("Jsonstring ", jsontest);
-
-//  }
-//  public Load(particlesystems: Array<ParticleSystem>, particleScenes: Array<ParticleScene>) {
-//    let particlesys = particlesystems;
-//    let particleScen = particleScenes;
-//    particlesys = new Array<ParticleSystem>();
-//    particleScen = new Array<ParticleScene>();
-//    console.log("particleScenes length", particleScen.length);
-//    //const jsontest: string = JSON.stringify(particlesystem);
-//    //console.log("Jsonstring ", jsontest);
-
-//  }
-//}

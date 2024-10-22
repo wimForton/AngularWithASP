@@ -1,6 +1,7 @@
 import { Slider } from "../../UiComponentData/Slider";
 import { EmitFromPoint } from "./emitters/EmitFromPoint";
 import { IEmitClass } from "./emitters/IEmitClass";
+import { classes, ForceClassNames } from "./forces/AddForceClasses";
 import { BounceForce } from "./forces/BounceForce";
 import { DragForce } from "./forces/DragForce";
 import { IForceClass } from "./forces/IForceClass";
@@ -22,7 +23,7 @@ export class FunctionWithTrigger {
   constructor(fn: Function, name: string) {
     this.fn = fn;
     this.name = name;
-    console.log("FunctionWithTrigger name" + this.name);
+    //console.log("FunctionWithTrigger name" + this.name);
   }
   public run() {
     this.fn();
@@ -54,10 +55,13 @@ export class ParticleSystem {
   public forcesParameters: Array<ControlParameters> = [];
   public addForces: Array<FunctionWithTrigger> = [];
   public name = "";
+  public forceclassnames!: ForceClassNames;
+
+
   constructor(maxParticles: number) {
     this.maxParticles = maxParticles;
     this.initParticles();
-
+    
     function addForceToArrays(this: ParticleSystem, force: IForceClass) {///this whole function becomes the function in FunctionWithTrigger
       const controlParameters = new ControlParameters()
       this.addForceClass(force);
@@ -72,6 +76,7 @@ export class ParticleSystem {
     this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new TurbulenceForce()), "Turbulence Force"));
     this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new BounceForce()), "Bounce Force"));
     this.addForces.push(new FunctionWithTrigger(addForceToArrays.bind(this, new ScaleInOutForce()), "Scale In Out"));
+    
     this.addEmitClass(new EmitFromPoint());// todo: add this after creation
     for (var i = 0; i < this.GetEmitClasses().length; i++) {
       const controlParameters = new ControlParameters();
@@ -80,6 +85,16 @@ export class ParticleSystem {
       controlParameters.id = i;
       this.emittersParameters.push(controlParameters);
     }
+  }
+
+  //public GetForceEnumKeys(): string[] {
+  //  const enumKeys = Object.keys(this.forceclassnames);
+  //  return enumKeys;
+  //}
+
+  public AddForceClassesByKey(forcename: ForceClassNames) {
+    var forceclass = new classes[forcename]();
+    this.forceClasses.push(forceclass);
   }
 
   private initParticles() {

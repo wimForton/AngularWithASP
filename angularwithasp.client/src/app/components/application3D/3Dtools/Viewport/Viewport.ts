@@ -85,7 +85,7 @@ export class Viewport {
     this.renderer.setSize(this.containerProps.width, this.containerProps.height);
     this.renderer.setPixelRatio(window.devicePixelRatio)
     this.renderer.render(this.scene, this.camera);
-    console.log("containerreset:", this.container.offsetWidth, "delay :", this.testcounter);
+    //console.log("containerreset:", this.container.offsetWidth, "delay :", this.testcounter);
   }
 
   public render() {

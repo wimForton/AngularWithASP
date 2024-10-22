@@ -41,6 +41,8 @@ export class DragForceComponent implements AfterViewInit {
   public sl1 = { disabled: false, min: 0, max: 1, showTicks: false, step: 0.01, thumbLabel: true, label: "strength" }
   public sl2 = { disabled: false, min: 0, max: 1, showTicks: false, step: 0.01, thumbLabel: true, label: "strength scale" }
 
+  public v1 = { disabled: false, min: 0, max: 1, showTicks: false, step: 0.01, thumbLabel: true, label: "strength" }
+
   public value1: number = 0;
   public value2: number = 0;
 

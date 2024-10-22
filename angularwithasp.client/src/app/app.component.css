@@ -11,3 +11,11 @@ th, td {
 table {
     margin: 0 auto;
 }
+
+.pagecontainer {
+  max-width: 1500px;
+  margin: auto;
+}
+.menuitem{
+    margin-bottom: 20px;
+}

@@ -17,6 +17,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { PanelSelectorComponent } from '../3Dtools/ParticleSystem/AngularComponents/ForceComponents/panelselector.component';
 import { Load, Save } from '../3Dtools/ParticleSystem/LoadSave/LoadSave';
 import { EmitFromPoint } from '../3Dtools/ParticleSystem/emitters/EmitFromParticles';
+import { ForceClassNames } from '../3Dtools/ParticleSystem/forces/AddForceClasses';
+declare var require: any;
+
 
 
 
@@ -53,6 +56,8 @@ export class ParticlesPageComponent implements AfterViewInit {
   public addForces: Array<FunctionWithTrigger> = [];
   public panelOpenIndex = 0;
   readonly checked = model(false);
+  public ForceClassNames = ForceClassNames;
+
 
   //private loadsave = LoadSave.instance;
   public particleSystems: Array<ParticleSystem> = new Array<ParticleSystem>();
@@ -70,14 +75,10 @@ export class ParticlesPageComponent implements AfterViewInit {
     var container: HTMLElement = this.viewportcontainer.nativeElement;
 
     setTimeout(() => {
-      console.log("container:", container);
+      //console.log("container:", container);
       
 
       const particleSystem = new ParticleSystem(200);
-
-      //particleSystem.addEmitClass(new EmitFromPoint());
-
-      //particleSystem.addForceClass()
       //const particleSystem2 = new ParticleSystem(3);
       //const particleSystem3 = new ParticleSystem(200);
 
@@ -94,17 +95,41 @@ export class ParticlesPageComponent implements AfterViewInit {
       this.viewPort = new Viewport(this.particleScenes, "container", container);
 
     }, 50);
-    console.log("containeraftertimeout:", container);
+    //console.log("containeraftertimeout:", container);
 
   }
 
-  public LoadParticles() {
+  public LoadParticles1() {
+    let json1 = require('./json1.json');
+    Load(this.particleSystems, this.particleScenes, this.viewPort!, json1);
+  }
+
+  public LoadParticles2() {
+    let json2 = require('./json2.json');
+    Load(this.particleSystems, this.particleScenes, this.viewPort!, json2);
+  }
+
+  public LoadParticles3() {
+    let json3 = require('./json3.json');
+    Load(this.particleSystems, this.particleScenes, this.viewPort!, json3);
+  }
+
+  public LoadParticles4() {
+    let json4 = require('./json4.json');
+    Load(this.particleSystems, this.particleScenes, this.viewPort!, json4);
+  }
+
+  public InitParticles() {
     //this.viewPort!.clear();
     //this.particleSystems = [];
     //this.particleScenes = [];
-    Load(this.particleSystems, this.particleScenes, this.viewPort!);
-    console.log("particleScenes length", this.particleScenes.length);
+
+    let json2 = require('./new.json');
+    Load(this.particleSystems, this.particleScenes, this.viewPort!, json2);
+
+    //console.log("particleScenes length", this.particleScenes.length);
   }
+
   public SaveParticles() {
     let particleparametergroup: ParticleParameterGroup = new ParticleParameterGroup(this.particleSystems);
     Save(particleparametergroup);

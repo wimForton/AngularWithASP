@@ -1,39 +1,40 @@
-<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms" id="tabgroup">
-  <mat-tab label="Home"><app-home></app-home></mat-tab>
-  <mat-tab label="Particle System" id="secondtablabel"><div id="secondtabcontent"><app-particles-page></app-particles-page></div></mat-tab>
-  <mat-tab label="Early Work">Content 3</mat-tab>
-</mat-tab-group>
+<div class="pagecontainer">
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms" id="tabgroup">
+    <mat-tab class="menuitem" label="Home"><app-home></app-home></mat-tab>
+    <mat-tab class="menuitem" label="Particle System" id="secondtablabel"><div id="secondtabcontent"><app-particles-page></app-particles-page></div></mat-tab>
+    <mat-tab class="menuitem" label="Early Work"><app-earlywork></app-earlywork></mat-tab>
+  </mat-tab-group>
+ </div>
 
 
 
+  <!--<h1 id="tableLabel">3D!</h1>
 
-<!--<h1 id="tableLabel">3D!</h1>
+  <p>This component demonstrates fetching data from the server.</p>
 
-<p>This component demonstrates fetching data from the server.</p>
+  <p *ngIf="!forecasts"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
 
-<p *ngIf="!forecasts"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
+  <table *ngIf="forecasts">
+      <thead>
+          <tr>
+              <th>Date</th>
+              <th>Temp. (C)</th>
+              <th>Temp. (F)</th>
+              <th>Summary</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let forecast of forecasts">
+              <td>{{ forecast.date }}</td>
+              <td>{{ forecast.temperatureC }}</td>
+              <td>{{ forecast.temperatureF }}</td>
+              <td>{{ forecast.summary }}</td>
+          </tr>
+      </tbody>
+  </table>
 
-<table *ngIf="forecasts">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let forecast of forecasts">
-            <td>{{ forecast.date }}</td>
-            <td>{{ forecast.temperatureC }}</td>
-            <td>{{ forecast.temperatureF }}</td>
-            <td>{{ forecast.summary }}</td>
-        </tr>
-    </tbody>
-</table>
-
-<app-testgrid></app-testgrid>
+  <app-testgrid></app-testgrid>
 
 
-<app-particles-page></app-particles-page>
-  -->
+  <app-particles-page></app-particles-page>
+    -->

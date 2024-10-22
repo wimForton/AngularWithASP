@@ -41,6 +41,11 @@ button {
   margin-left: 10px;
   background-color: white;
 }
+.pagecontainer{
+    max-width: 1500px;
+    margin:auto;
+    margin-top: 10px;
+}
 .controllers-title {
   font-size: 20px;
   padding: 5px;
@@ -54,7 +59,7 @@ header h2 {
 }
 .left {
   float: left;
-  width: 70%;
+  width: 75%;
   height: 800px; /* only for demonstration, should be removed */
   background: #ccc;
   border-radius: 6px;
@@ -63,9 +68,11 @@ header h2 {
 .right {
   padding: 8px;
   float: left;
-  width: 30%;
+  width: 25%;
   max-width: 390px;
+  max-height: 800px;
   background-color: rgb(108, 104, 90);
+  overflow-y: auto;
   /* height: 1000px;  only for demonstration, should be removed */
 }
 .right p{

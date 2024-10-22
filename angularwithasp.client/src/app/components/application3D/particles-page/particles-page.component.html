@@ -3,84 +3,92 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 
 </head>
-<header>
-  <h2>
+<div class="pagecontainer">
+  <header>
+
     Particles
-    <button mat-raised-button (click)="LoadParticles()">Load preset</button>
+    <button mat-raised-button (click)="InitParticles()">New</button>
+    <button mat-button [matMenuTriggerFor]="menu">presets</button>
+    <mat-menu #menu="matMenu">
+      <button mat-raised-button (click)="LoadParticles1()">preset 1</button>
+      <button mat-raised-button (click)="LoadParticles2()">preset 2</button>
+      <button mat-raised-button (click)="LoadParticles3()">preset 3</button>
+      <button mat-raised-button (click)="LoadParticles4()">preset 4</button>
+    </mat-menu>
     <button mat-raised-button (click)="SaveParticles()">Save preset (console log)</button>
 
-  </h2>
-</header>
-<div class="midsection">
-  <section>
+  </header>
+  <div class="midsection">
+    <section>
 
-    <div class="left" id="container" #viewportcontainer>
+      <div class="left" id="container" #viewportcontainer>
 
-    </div>
+      </div>
 
-    <div class="right" id="containerB">
-      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
-        <mat-tab *ngFor="let particlesystem of particleSystems">
-          <ng-template mat-tab-label class="controllers-title">
-            <p>
-              Particles
-              {{getParticleSystemId(particlesystem)}}
-            </p>
-          </ng-template>
-          <div class="controllers-title">
-            <p>
-              Emitter
-              <mat-checkbox class="example-margin" [(ngModel)]="checked">enable</mat-checkbox>
-            </p>
-          </div>
-          <mat-accordion mutli="false">
-            <div *ngFor="let item of particlesystem.emittersParameters">
-              <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                  <mat-panel-title>{{item.name}}</mat-panel-title>
-                </mat-expansion-panel-header>
-                <div *ngFor="let slider of item.sliders">
-                  <mat-form-field appearance="outline" style="width: 100px; padding: 0px" (input)="slider.onInputChange($event)">
-                    <mat-label>{{slider.label}}</mat-label>
-                    <input matInput type="number" [(ngModel)]="slider.value">
-                  </mat-form-field>
-                  <mat-slider class="example-margin mat-body-small"
-                              [disabled]="slider.disabled"
-                              [max]="slider.max"
-                              [min]="slider.min"
-                              [step]="slider.step"
-                              [discrete]="slider.thumbLabel">
-                    <input matSliderThumb [(ngModel)]="slider.value" #slider (input)="slider.onInputChange($event)">
-                  </mat-slider>
-                </div>
-              </mat-expansion-panel>
-            </div>
+      <div class="right" id="containerB">
+        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+          <mat-tab *ngFor="let particlesystem of particleSystems">
+            <ng-template mat-tab-label class="controllers-title">
+              <p>
+                Particles
+                {{getParticleSystemId(particlesystem)}}
+              </p>
+            </ng-template>
             <div class="controllers-title">
-              <p class="controllers-title">
-                Operators
-                <button mat-button [matMenuTriggerFor]="menu">Add Operator</button>
-                <mat-menu #menu="matMenu">
-                  <div *ngFor="let forcetoadd of particlesystem.addForces">
-                    <button mat-menu-item (click)="forcetoadd.run()">{{forcetoadd.name}}</button>
-                  </div>
-                </mat-menu>
+              <p>
+                Emitter
+                <mat-checkbox class="example-margin" [(ngModel)]="checked">enable</mat-checkbox>
               </p>
             </div>
-            <div *ngFor="let item of particlesystem.forceClasses">
-              <mat-expansion-panel [expanded]="panelOpenIndex">
-                <mat-expansion-panel-header>
-                  <mat-panel-title>{{item.name}}  </mat-panel-title>
-                </mat-expansion-panel-header>
-                <app-panelselector [component]="item.name" [forceinstance]="item"></app-panelselector>
-              </mat-expansion-panel>
-            </div>
-          </mat-accordion>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
+            <mat-accordion mutli="false">
+              <div *ngFor="let item of particlesystem.emittersParameters">
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>{{item.name}}</mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div *ngFor="let slider of item.sliders">
+                    <mat-form-field appearance="outline" style="width: 100px; padding: 0px" (input)="slider.onInputChange($event)">
+                      <mat-label>{{slider.label}}</mat-label>
+                      <input matInput type="number" [(ngModel)]="slider.value">
+                    </mat-form-field>
+                    <mat-slider class="example-margin mat-body-small"
+                                [disabled]="slider.disabled"
+                                [max]="slider.max"
+                                [min]="slider.min"
+                                [step]="slider.step"
+                                [discrete]="slider.thumbLabel">
+                      <input matSliderThumb [(ngModel)]="slider.value" #slider (input)="slider.onInputChange($event)">
+                    </mat-slider>
+                  </div>
+                </mat-expansion-panel>
+              </div>
+              <div class="controllers-title">
+                <p class="controllers-title">
+                  Operators
+                  <button mat-button [matMenuTriggerFor]="menu">Add Operator</button>
+                  <mat-menu #menu="matMenu">
+                    <div *ngFor="let forcetoadd of ForceClassNames | keyvalue">
+                      <button mat-menu-item (click)="particlesystem.AddForceClassesByKey(forcetoadd.value)">key {{forcetoadd.value}}</button>
+                    </div>
+                  </mat-menu>
+                </p>
+              </div>
+              <div *ngFor="let item of particlesystem.forceClasses">
+                <mat-expansion-panel [expanded]="panelOpenIndex">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>{{item.name}}  </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <app-panelselector [component]="item.name" [forceinstance]="item"></app-panelselector>
+                </mat-expansion-panel>
+              </div>
+            </mat-accordion>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
 
-  </section>
+    </section>
+  </div>
+
+  <footer>
+  </footer>
 </div>
-
-<footer>
-</footer>
