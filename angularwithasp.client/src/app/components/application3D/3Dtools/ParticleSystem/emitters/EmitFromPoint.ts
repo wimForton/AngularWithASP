@@ -50,8 +50,8 @@ export class EmitFromPoint implements IEmitClass{
     let slider6 = new Slider();
     slider6.label = "Max Size";
     slider6.min = 0;
-    slider6.max = 2;
-    slider6.value = 0.6;
+    slider6.max = 4;
+    slider6.value = 2;
     this.sliders.push(slider6);
 
   }
@@ -61,6 +61,8 @@ export class EmitFromPoint implements IEmitClass{
     p.scale.set(0,0,0);
     if (MinMaxRandomize(0, 20) < this.sliders[1].value) {
       let size = MinMaxRandomize(this.sliders[5].value, this.sliders[6].value);
+      let color: number[] = MinMaxRandomizeArray([0, 0, 0], [1, 1, 1]);
+      p.color.set(color[0], color[1], color[2]);
       p.scale.set(size, size, size);
       p.startscale.set(size, size, size);
       p.position.set(0, 0, 0);//(p.position.x, p.position.y, p.position.z)

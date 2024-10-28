@@ -40,6 +40,7 @@ mat-panel-title {
 button {
   margin-left: 10px;
   background-color: white;
+  margin-top: 4px;
 }
 .pagecontainer{
     max-width: 1500px;
@@ -53,9 +54,9 @@ button {
 header h2 {
   font-size: 50px;
 }
- 
+
 .midsection {
-  background-color: rgb(234, 229, 211);
+  background-color: rgb(108, 104, 90);
 }
 .left {
   float: left;

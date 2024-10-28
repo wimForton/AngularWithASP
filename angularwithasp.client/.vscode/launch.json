@@ -14,6 +14,13 @@
       "name": "localhost (Chrome)",
       "url": "https://localhost:4200",
       "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "firefox",
+      "request": "launch",
+      "name": "localhost (Chrome)",
+      "url": "https://localhost:4200",
+      "webRoot": "${workspaceFolder}"
     }
   ]
 }

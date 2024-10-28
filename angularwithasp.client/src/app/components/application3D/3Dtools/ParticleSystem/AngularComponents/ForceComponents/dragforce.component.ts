@@ -60,4 +60,6 @@ export class DragForceComponent implements AfterViewInit {
     this.value2 = +((event.target as HTMLInputElement).value);// + = string to number
     this.force!.value2 = this.value2;
   }
+
+
 }

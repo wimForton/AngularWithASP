@@ -38,15 +38,16 @@ export class ParticleScene {
 
   private CreateThreeObjects() {
     const textureLoader = new THREE.TextureLoader();
-    const sprite = textureLoader.load('textures/snowflake2.png');
-    sprite.colorSpace = THREE.SRGBColorSpace;
 
-    const color = [0.3, 0.8, 0.5];
-    const spriteMaterial = new THREE.SpriteMaterial({ map: sprite, blending: THREE.AdditiveBlending, transparent: true, color: 0xffffff, fog: true });
-    spriteMaterial.color.setHSL(color[0], color[1], color[2], THREE.SRGBColorSpace);
+    //spriteMaterial.color.setHSL(color[0], color[1], color[2], THREE.SRGBColorSpace);
 
 
     for (var p = 0; p < this.particleSystem.Particles.length; p++) {
+      const spritetexture = textureLoader.load('textures/star.png');
+      spritetexture.colorSpace = THREE.SRGBColorSpace;
+
+      const color = [0.3, 0.8, 0.5];
+      const spriteMaterial = new THREE.SpriteMaterial({ map: spritetexture, color: 0xffffff, fog: true });//blending: THREE.AdditiveBlending, transparent: true, 
       const sprite = new THREE.Sprite(spriteMaterial);
       this.scene.add(sprite);
       this.threeSprites.push(sprite);
@@ -58,7 +59,9 @@ export class ParticleScene {
     for (var p = 0; p < this.particleSystem.Particles.length; p++) {
 
       let particle = this.particleSystem.Particles[p];
-
+      this.threeSprites[p]
+      this.threeSprites[p].material.color.setRGB(particle.color.x, particle.color.y, particle.color.z);
+      //this.threeSprites[p].material.color.setRGB(1, 1, 0);
       this.threeSprites[p].position.set(particle.position.x, particle.position.y, particle.position.z);
       this.threeSprites[p].scale.set(particle.scale.x, particle.scale.y, particle.scale.z);
     }

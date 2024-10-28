@@ -119,6 +119,11 @@ export class ParticlesPageComponent implements AfterViewInit {
     Load(this.particleSystems, this.particleScenes, this.viewPort!, json4);
   }
 
+  public LoadParticles5() {
+    let json5 = require('./json5.json');
+    Load(this.particleSystems, this.particleScenes, this.viewPort!, json5);
+  }
+
   public InitParticles() {
     //this.viewPort!.clear();
     //this.particleSystems = [];

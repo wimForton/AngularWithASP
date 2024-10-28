@@ -50,6 +50,9 @@ body {
     text-align:left;
     padding: 30px;
   }
+  .divtextblok a {
+    color:aqua;
+  }
 
 .divparentleft {
   position: relative;
